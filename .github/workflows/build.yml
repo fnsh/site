@@ -91,9 +91,9 @@ jobs:
 
       - name: Fetch upstream tags
         # yamllint disable rule:line-length
-        if: ${{ github.repository != 'freifunk-darmstadt/site-ffda' }}
+        if: ${{ github.repository != 'fnsh/site' }}
         run: |
-          git remote add upstream https://github.com/freifunk-darmstadt/site-ffda.git
+          git remote add upstream https://github.com/fnsh/site.git
           git fetch upstream --tags
         # yamllint enable rule:line-length
 
@@ -405,7 +405,7 @@ jobs:
           gluon-path: "gluon-gha-data/gluon"
           manifest: >-
             gluon-gha-data/gluon/output/images/sysupgrade/stable.manifest
-          signing-key: ${{ secrets.GHA_FFDA_BUILD_ECDSA_KEY_STABLE }}
+          signing-key: ${{ secrets.GHA_FNSH_BUILD_ECDSA_KEY_STABLE }}
           write-signature: "true"
 
       - name: Sign manifest (Beta)
@@ -418,7 +418,7 @@ jobs:
           gluon-path: "gluon-gha-data/gluon"
           manifest: >-
             gluon-gha-data/gluon/output/images/sysupgrade/beta.manifest
-          signing-key: ${{ secrets.GHA_FFDA_BUILD_ECDSA_KEY_BETA }}
+          signing-key: ${{ secrets.GHA_FNSH_BUILD_ECDSA_KEY_BETA }}
           write-signature: "true"
 
       - name: Sign manifest (Testing)
@@ -431,7 +431,7 @@ jobs:
           gluon-path: "gluon-gha-data/gluon"
           manifest: >-
             gluon-gha-data/gluon/output/images/sysupgrade/testing.manifest
-          signing-key: ${{ secrets.GHA_FFDA_BUILD_ECDSA_KEY_TESTING }}
+          signing-key: ${{ secrets.GHA_FNSH_BUILD_ECDSA_KEY_TESTING }}
           write-signature: "true"
 
       - name: Create Artifact Directory
@@ -487,16 +487,16 @@ jobs:
       - name: Save SSH Key for deployment
         run: >
           mkdir -p ~/.ssh &&
-          echo "${{ secrets.GHA_FFDA_BUILD_DEPLOY_SSH_KEY }}" >
+          echo "${{ secrets.GHA_FNSH_BUILD_DEPLOY_SSH_KEY }}" >
           ~/.ssh/deploy_key && chmod 600 ~/.ssh/deploy_key
 
       - name: Deploy Images
         # yamllint disable-line rule:line-length
-        run: rsync -avzP -e "ssh -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key -oIdentitiesOnly=yes" gluon-gha-data/gluon-output/output/images/{factory,sysupgrade,other} "ffda_firmware@www3.darmstadt.freifunk.net:/srv/firmware/images/${{ needs.build-meta.outputs.release-version }}/"
+        run: rsync -avzP -e "ssh -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key -oIdentitiesOnly=yes" gluon-gha-data/gluon-output/output/images/{factory,sysupgrade,other} "bnbhgy@www720.your-server.de:/usr/home/bnbhgy/public_html/firmware/artifacts/images/${{ needs.build-meta.outputs.release-version }}/"
 
       - name: Deploy Packages
         # yamllint disable-line rule:line-length
-        run: rsync -avzP -e "ssh -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key -oIdentitiesOnly=yes" "gluon-gha-data/gluon-output/output/packages/gluon-ffda-${{ needs.build-meta.outputs.release-version }}" "ffda_firmware@www3.darmstadt.freifunk.net:/srv/firmware/modules/"
+        run: rsync -avzP -e "ssh -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key -oIdentitiesOnly=yes" "gluon-gha-data/gluon-output/output/packages/gluon-ffda-${{ needs.build-meta.outputs.release-version }}" "bnbhgy@www720.your-server.de:/usr/home/bnbhgy/public_html/firmware/artifacts/modules/"
 
   link-release:
     needs: [build, build-meta, targets, manifest, deploy]
@@ -510,7 +510,7 @@ jobs:
       - name: Save SSH Key for deployment
         run: >
           mkdir -p ~/.ssh &&
-          echo "${{ secrets.GHA_FFDA_BUILD_DEPLOY_SSH_KEY }}" >
+          echo "${{ secrets.GHA_FNSH_BUILD_DEPLOY_SSH_KEY }}" >
           ~/.ssh/deploy_key && chmod 600 ~/.ssh/deploy_key
 
       - name: Link Release
@@ -525,8 +525,8 @@ jobs:
           -oUserKnownHostsFile=/dev/null
           -oStrictHostKeyChecking=no
           -oIdentitiesOnly=yes
-          ffda_firmware@www3.darmstadt.freifunk.net
-          "ln -n -f -s /srv/firmware/images/$RELEASE_VERSION /srv/firmware/images/$AUTOUPDATER_BRANCH"
+          bnbhgy@www720.your-server.de
+          "ln -n -f -s /usr/home/bnbhgy/public_html/firmware/artifacts/images/$RELEASE_VERSION /usr/home/bnbhgy/public_html/firmware/artifacts/images/$AUTOUPDATER_BRANCH"
         # yamllint enable rule:line-length
 
 

@@ -3,7 +3,7 @@
 set -euxo pipefail
 
 SCRIPT_DIR="$(dirname "$0")"
-UPSTREAM_REPO_NAME="freifunk-darmstadt/site-ffda"
+UPSTREAM_REPO_NAME="fnsh/site"
 
 OVERRIDES_DIR="$SCRIPT_DIR/overrides/build-meta"
 

@@ -10,8 +10,8 @@ import base64
 import hashlib
 import argparse
 
-DEFAULT_OWNER = "freifunk-darmstadt"
-DEFAULT_REPO = "site-ffda"
+DEFAULT_OWNER = "fnsh"
+DEFAULT_REPO = "site"
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description='Load and print attestation from a GitHub API.')
