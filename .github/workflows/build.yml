@@ -396,7 +396,7 @@ jobs:
           broken: ${{ needs.build-meta.outputs.broken }}
 
       - name: Sign manifest (Stable)
-        uses: freifunk-gluon/action-sign@v1
+        uses: freifunk-gluon/action-sign@v2
         if: >
           needs.build-meta.outputs.manifest-stable != '0' &&
           needs.build-meta.outputs.sign-manifest != '0'
@@ -409,7 +409,7 @@ jobs:
           write-signature: "true"
 
       - name: Sign manifest (Beta)
-        uses: freifunk-gluon/action-sign@v1
+        uses: freifunk-gluon/action-sign@v2
         if: >
           needs.build-meta.outputs.manifest-beta != '0' &&
           needs.build-meta.outputs.sign-manifest != '0'
@@ -422,7 +422,7 @@ jobs:
           write-signature: "true"
 
       - name: Sign manifest (Testing)
-        uses: freifunk-gluon/action-sign@v1
+        uses: freifunk-gluon/action-sign@v2
         if: >
           needs.build-meta.outputs.manifest-testing != '0' &&
           needs.build-meta.outputs.sign-manifest != '0'
