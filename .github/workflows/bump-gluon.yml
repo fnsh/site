@@ -30,6 +30,8 @@ jobs:
       BUILD_INFO_TMP: .github/build-info.json.tmp
       COMMIT_NAME: GitHub Actions
       COMMIT_EMAIL: info@darmstadt.freifunk.net
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v6
