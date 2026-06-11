@@ -492,11 +492,11 @@ jobs:
 
       - name: Deploy Images
         # yamllint disable-line rule:line-length
-        run: rsync -avzP -e "ssh -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key -oIdentitiesOnly=yes" gluon-gha-data/gluon-output/output/images/{factory,sysupgrade,other} "bnbhgy@www720.your-server.de:/usr/home/bnbhgy/public_html/firmware/artifacts/images/${{ needs.build-meta.outputs.release-version }}/"
+        run: rsync -avzP -e "ssh -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key -p222 -oIdentitiesOnly=yes" gluon-gha-data/gluon-output/output/images/{factory,sysupgrade,other} "bnbhgy@www720.your-server.de:/usr/home/bnbhgy/public_html/firmware/artifacts/images/${{ needs.build-meta.outputs.release-version }}/"
 
       - name: Deploy Packages
         # yamllint disable-line rule:line-length
-        run: rsync -avzP -e "ssh -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key -oIdentitiesOnly=yes" "gluon-gha-data/gluon-output/output/packages/gluon-ffda-${{ needs.build-meta.outputs.release-version }}" "bnbhgy@www720.your-server.de:/usr/home/bnbhgy/public_html/firmware/artifacts/modules/"
+        run: rsync -avzP -e "ssh -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key -p222 -oIdentitiesOnly=yes" "gluon-gha-data/gluon-output/output/packages/gluon-ffda-${{ needs.build-meta.outputs.release-version }}" "bnbhgy@www720.your-server.de:/usr/home/bnbhgy/public_html/firmware/artifacts/modules/"
 
   link-release:
     needs: [build, build-meta, targets, manifest, deploy]
@@ -525,6 +525,7 @@ jobs:
           -oUserKnownHostsFile=/dev/null
           -oStrictHostKeyChecking=no
           -oIdentitiesOnly=yes
+          -p222
           bnbhgy@www720.your-server.de
           "ln -n -f -s /usr/home/bnbhgy/public_html/firmware/artifacts/images/$RELEASE_VERSION /usr/home/bnbhgy/public_html/firmware/artifacts/images/$AUTOUPDATER_BRANCH"
         # yamllint enable rule:line-length
