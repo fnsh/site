@@ -28,8 +28,9 @@ packages({
 
 -- Enable SQM only on targets which have the CPU capabilities
 -- to use CAKE
+local ramips_sqm = target('ramips') and target('ramips', 'mt7621')
 if not target('ath79')
-	and not target('ramips')
+	and not ramips_sqm
 	and not target('lantiq')
 	then
 	features({
