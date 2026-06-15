@@ -496,7 +496,7 @@ jobs:
 
       - name: Deploy Packages
         # yamllint disable-line rule:line-length
-        run: rsync -avzP -e "ssh -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key -p222 -oIdentitiesOnly=yes" "gluon-gha-data/gluon-output/output/packages/gluon-ffda-${{ needs.build-meta.outputs.release-version }}" "bnbhgy@www720.your-server.de:/usr/home/bnbhgy/public_html/firmware/artifacts/modules/"
+        run: rsync -avzP -e "ssh -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key -p222 -oIdentitiesOnly=yes" "gluon-gha-data/gluon-output/output/packages/gluon-fnsh-${{ needs.build-meta.outputs.release-version }}" "bnbhgy@www720.your-server.de:/usr/home/bnbhgy/public_html/firmware/artifacts/modules/"
 
   link-release:
     needs: [build, build-meta, targets, manifest, deploy]
