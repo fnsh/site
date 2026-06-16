@@ -527,7 +527,7 @@ jobs:
           -oIdentitiesOnly=yes
           -p222
           bnbhgy@www720.your-server.de
-          "ln -f -s $RELEASE_VERSION /usr/home/bnbhgy/public_html/firmware/artifacts/images/$AUTOUPDATER_BRANCH"
+          "ln -f -s -T $RELEASE_VERSION /usr/home/bnbhgy/public_html/firmware/artifacts/images/$AUTOUPDATER_BRANCH"
         # yamllint enable rule:line-length
 
 
