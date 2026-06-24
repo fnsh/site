@@ -45,6 +45,10 @@ if not device_class('tiny') then
 --		'ffda-gluon-usteer'
 --	})
 
+	packages({
+		'fssrl-client-gluon'
+	})
+
 	features({
 		'tls',
 		'web-cellular',
