@@ -5,7 +5,7 @@ PATCHES_DIR ?= patches
 PREPARE_SCRIPT := contrib/prepare-gluon.sh
 UPDATE_SCRIPT := contrib/update-patches.sh
 
-.PHONY: prepare update
+.PHONY: update refresh-patches update-patches
 
 update:
 	@bash $(PREPARE_SCRIPT) "$(BUILD_INFO)" "$(GLUON_DIR)" "$(PATCHES_DIR)"
@@ -13,3 +13,6 @@ update:
 
 update-patches:
 	@bash $(UPDATE_SCRIPT) "$(BUILD_INFO)" "$(GLUON_DIR)" "$(PATCHES_DIR)"
+
+refresh-patches: update update-patches
+	@echo "Patches refreshed successfully"
