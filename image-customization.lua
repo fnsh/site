@@ -26,18 +26,6 @@ packages({
 	'ffda-node-whisperer',
 })
 
--- Enable SQM only on targets which have the CPU capabilities
--- to use CAKE
-local ramips_sqm = target('ramips') and target('ramips', 'mt7621')
-if not target('ath79')
-	and not ramips_sqm
-	and not target('lantiq')
-	then
-	features({
-		'mesh-vpn-sqm'
-	})
-end
-
 -- Packages and features for devices which are not flagged as tiny
 if not device_class('tiny') then
 -- ToDo: Re-Enable once MLO bug is fixed.
