@@ -7,9 +7,9 @@ UPDATE_SCRIPT := contrib/update-patches.sh
 
 .PHONY: prepare update
 
-prepare:
+update:
 	@bash $(PREPARE_SCRIPT) "$(BUILD_INFO)" "$(GLUON_DIR)" "$(PATCHES_DIR)"
 	@ln -snf "$(MAKEFILE_DIR)" gluon/site
 
-update:
+update-patches:
 	@bash $(UPDATE_SCRIPT) "$(BUILD_INFO)" "$(GLUON_DIR)" "$(PATCHES_DIR)"
