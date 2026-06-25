@@ -54,6 +54,8 @@ if [ "$(git -C "$gluon_dir" rev-parse HEAD)" = "$gluon_commit" ]; then
 fi
 
 git -C "$gluon_dir" format-patch \
+  --no-numbered \
+  --no-signature \
   --output-directory "$patches_gluon_dir" \
   "$gluon_commit..HEAD"
 
