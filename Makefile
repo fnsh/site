@@ -5,7 +5,16 @@ PATCHES_DIR ?= patches
 PREPARE_SCRIPT := contrib/prepare-gluon.sh
 UPDATE_SCRIPT := contrib/update-patches.sh
 
-.PHONY: update refresh-patches update-patches
+.PHONY: clean default help test update refresh-patches update-patches
+
+default: help
+
+help:
+	@echo "Available targets:"
+	@echo "  clean             Remove gluon directories"
+	@echo "  update            Prepare gluon and link site directory"
+	@echo "  update-patches    Update patch set from current build info"
+	@echo "  refresh-patches   Run update and update-patches"
 
 update:
 	@bash $(PREPARE_SCRIPT) "$(BUILD_INFO)" "$(GLUON_DIR)" "$(PATCHES_DIR)"
@@ -16,3 +25,6 @@ update-patches:
 
 refresh-patches: update update-patches
 	@echo "Patches refreshed successfully"
+
+clean:
+	@rm -rf "$(GLUON_DIR)"
