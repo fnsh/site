@@ -59,4 +59,8 @@ git -C "$gluon_dir" format-patch \
   --output-directory "$patches_gluon_dir" \
   "$gluon_commit..HEAD"
 
+for patch_file in "$patches_gluon_dir"/*.patch; do
+  sed -i 's/^From [0-9a-f]\{40\} /From /' "$patch_file"
+done
+
 echo "Patch update completed successfully"
