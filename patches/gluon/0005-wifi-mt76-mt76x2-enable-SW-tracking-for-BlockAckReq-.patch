@@ -1,19 +1,19 @@
-From 9182b2b58cc8eb0ba1a89f997fb77e82589c3b41 Mon Sep 17 00:00:00 2001
+From ac915ff0efa8d80c35bf4bb8338a5f6f924b263e Mon Sep 17 00:00:00 2001
 From: David Bauer <mail@david-bauer.net>
 Date: Tue, 16 Jun 2026 16:58:51 +0200
-Subject: [PATCH 2503/2504] wifi: mt76: mt76x2: enable SW tracking for
- BlockAckReq ACK status
+Subject: [PATCH 5/6] wifi: mt76: mt76x2: enable SW tracking for BlockAckReq
+ ACK status
 
 ---
  ...-tracking-for-BlockAckReq-ACK-status.patch | 36 +++++++++++++++++++
  1 file changed, 36 insertions(+)
- create mode 100644 patches/openwrt/0022-wifi-mt76-mt76x2-enable-SW-tracking-for-BlockAckReq-ACK-status.patch
+ create mode 100644 patches/openwrt/0023-wifi-mt76-mt76x2-enable-SW-tracking-for-BlockAckReq-ACK-status.patch
 
-diff --git a/patches/openwrt/0022-wifi-mt76-mt76x2-enable-SW-tracking-for-BlockAckReq-ACK-status.patch b/patches/openwrt/0022-wifi-mt76-mt76x2-enable-SW-tracking-for-BlockAckReq-ACK-status.patch
+diff --git a/patches/openwrt/0023-wifi-mt76-mt76x2-enable-SW-tracking-for-BlockAckReq-ACK-status.patch b/patches/openwrt/0023-wifi-mt76-mt76x2-enable-SW-tracking-for-BlockAckReq-ACK-status.patch
 new file mode 100644
 index 00000000..036dbdd5
 --- /dev/null
-+++ b/patches/openwrt/0022-wifi-mt76-mt76x2-enable-SW-tracking-for-BlockAckReq-ACK-status.patch
++++ b/patches/openwrt/0023-wifi-mt76-mt76x2-enable-SW-tracking-for-BlockAckReq-ACK-status.patch
 @@ -0,0 +1,36 @@
 +From: David Bauer <mail@david-bauer.net>
 +Date: Tue, 16 Jun 2026 16:58:28 +0200

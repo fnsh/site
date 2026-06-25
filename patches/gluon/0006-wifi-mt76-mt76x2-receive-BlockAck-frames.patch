@@ -1,7 +1,7 @@
-From 7d62a43944caf56781d7384167ed3fda17d8a410 Mon Sep 17 00:00:00 2001
+From 4140f08a8ac4f9e50c78f295c8f826231390cfda Mon Sep 17 00:00:00 2001
 From: David Bauer <mail@david-bauer.net>
 Date: Wed, 17 Jun 2026 13:42:50 +0200
-Subject: [PATCH 2504/2504] wifi: mt76: mt76x2: receive BlockAck frames
+Subject: [PATCH 6/6] wifi: mt76: mt76x2: receive BlockAck frames
 
 Enable RX of BlockAck frames to the host.
 
@@ -11,13 +11,13 @@ Signed-off-by: David Bauer <mail@david-bauer.net>
 ---
  ...-mt76-mt76x2-receive-BlockAck-frames.patch | 53 +++++++++++++++++++
  1 file changed, 53 insertions(+)
- create mode 100644 patches/openwrt/0023-wifi-mt76-mt76x2-receive-BlockAck-frames.patch
+ create mode 100644 patches/openwrt/0024-wifi-mt76-mt76x2-receive-BlockAck-frames.patch
 
-diff --git a/patches/openwrt/0023-wifi-mt76-mt76x2-receive-BlockAck-frames.patch b/patches/openwrt/0023-wifi-mt76-mt76x2-receive-BlockAck-frames.patch
+diff --git a/patches/openwrt/0024-wifi-mt76-mt76x2-receive-BlockAck-frames.patch b/patches/openwrt/0024-wifi-mt76-mt76x2-receive-BlockAck-frames.patch
 new file mode 100644
 index 00000000..51c0bb3d
 --- /dev/null
-+++ b/patches/openwrt/0023-wifi-mt76-mt76x2-receive-BlockAck-frames.patch
++++ b/patches/openwrt/0024-wifi-mt76-mt76x2-receive-BlockAck-frames.patch
 @@ -0,0 +1,53 @@
 +From: David Bauer <mail@david-bauer.net>
 +Date: Wed, 17 Jun 2026 13:42:31 +0200

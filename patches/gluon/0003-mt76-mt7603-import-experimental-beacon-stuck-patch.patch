@@ -1,19 +1,18 @@
-From 9589962b641a619477ee1229ed609d56bafce765 Mon Sep 17 00:00:00 2001
+From e164cbc6e9f54b4819b7269e451e4c75d949dfd9 Mon Sep 17 00:00:00 2001
 From: David Bauer <mail@david-bauer.net>
 Date: Sat, 13 Jun 2026 17:58:46 +0200
-Subject: [PATCH 2501/2504] mt76: mt7603: import experimental beacon stuck
- patch
+Subject: [PATCH 3/6] mt76: mt7603: import experimental beacon stuck patch
 
 ---
  ...port-experimental-beacon-stuck-patch.patch | 166 ++++++++++++++++++
  1 file changed, 166 insertions(+)
- create mode 100644 patches/openwrt/0020-mt76-mt7603-import-experimental-beacon-stuck-patch.patch
+ create mode 100644 patches/openwrt/0021-mt76-mt7603-import-experimental-beacon-stuck-patch.patch
 
-diff --git a/patches/openwrt/0020-mt76-mt7603-import-experimental-beacon-stuck-patch.patch b/patches/openwrt/0020-mt76-mt7603-import-experimental-beacon-stuck-patch.patch
+diff --git a/patches/openwrt/0021-mt76-mt7603-import-experimental-beacon-stuck-patch.patch b/patches/openwrt/0021-mt76-mt7603-import-experimental-beacon-stuck-patch.patch
 new file mode 100644
 index 00000000..8c507a22
 --- /dev/null
-+++ b/patches/openwrt/0020-mt76-mt7603-import-experimental-beacon-stuck-patch.patch
++++ b/patches/openwrt/0021-mt76-mt7603-import-experimental-beacon-stuck-patch.patch
 @@ -0,0 +1,166 @@
 +From: David Bauer <mail@david-bauer.net>
 +Date: Sat, 13 Jun 2026 17:53:43 +0200

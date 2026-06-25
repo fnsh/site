@@ -1,7 +1,7 @@
-From d3abb23647ba1d28861a2e531450871987c807af Mon Sep 17 00:00:00 2001
+From 30be316cd8eb5c1c08f6c56e6045bf49a9fa8cc6 Mon Sep 17 00:00:00 2001
 From: David Bauer <mail@david-bauer.net>
 Date: Sat, 13 Jun 2026 17:59:00 +0200
-Subject: [PATCH 2502/2504] wifi: mt76: mt7603: free beacon SKB on error
+Subject: [PATCH 4/6] wifi: mt76: mt7603: free beacon SKB on error
 
 The SKB containing the generated beacon is not freed when the beacon
 queue is deected stuck and scheduled for recovery.
@@ -12,13 +12,13 @@ Signed-off-by: David Bauer <mail@david-bauer.net>
 ---
  ...mt76-mt7603-free-beacon-SKB-on-error.patch | 55 +++++++++++++++++++
  1 file changed, 55 insertions(+)
- create mode 100644 patches/openwrt/0021-wifi-mt76-mt7603-free-beacon-SKB-on-error.patch
+ create mode 100644 patches/openwrt/0022-wifi-mt76-mt7603-free-beacon-SKB-on-error.patch
 
-diff --git a/patches/openwrt/0021-wifi-mt76-mt7603-free-beacon-SKB-on-error.patch b/patches/openwrt/0021-wifi-mt76-mt7603-free-beacon-SKB-on-error.patch
+diff --git a/patches/openwrt/0022-wifi-mt76-mt7603-free-beacon-SKB-on-error.patch b/patches/openwrt/0022-wifi-mt76-mt7603-free-beacon-SKB-on-error.patch
 new file mode 100644
 index 00000000..e57f372a
 --- /dev/null
-+++ b/patches/openwrt/0021-wifi-mt76-mt7603-free-beacon-SKB-on-error.patch
++++ b/patches/openwrt/0022-wifi-mt76-mt7603-free-beacon-SKB-on-error.patch
 @@ -0,0 +1,55 @@
 +From: David Bauer <mail@david-bauer.net>
 +Date: Sat, 13 Jun 2026 17:57:33 +0200
