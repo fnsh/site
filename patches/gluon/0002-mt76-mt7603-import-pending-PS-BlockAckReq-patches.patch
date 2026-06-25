@@ -1,7 +1,7 @@
-From fe2f0d300f9ba0eda4aec1e01c64093ee1020a4c Mon Sep 17 00:00:00 2001
+From Mon Sep 17 00:00:00 2001
 From: David Bauer <mail@david-bauer.net>
 Date: Sat, 13 Jun 2026 17:58:17 +0200
-Subject: [PATCH 2/6] mt76: mt7603: import pending PS BlockAckReq patches
+Subject: [PATCH] mt76: mt7603: import pending PS BlockAckReq patches
 
 ---
  ...mport-pending-PS-BlockAckReq-patches.patch | 464 ++++++++++++++++++
@@ -478,6 +478,3 @@ index 00000000..99fa0aa4
 ++-- 
 ++2.53.0
 ++
--- 
-2.53.0
-

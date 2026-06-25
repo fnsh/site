@@ -1,7 +1,7 @@
-From 30be316cd8eb5c1c08f6c56e6045bf49a9fa8cc6 Mon Sep 17 00:00:00 2001
+From Mon Sep 17 00:00:00 2001
 From: David Bauer <mail@david-bauer.net>
 Date: Sat, 13 Jun 2026 17:59:00 +0200
-Subject: [PATCH 4/6] wifi: mt76: mt7603: free beacon SKB on error
+Subject: [PATCH] wifi: mt76: mt7603: free beacon SKB on error
 
 The SKB containing the generated beacon is not freed when the beacon
 queue is deected stuck and scheduled for recovery.
@@ -75,6 +75,3 @@ index 00000000..e57f372a
 ++-- 
 ++2.53.0
 ++
--- 
-2.53.0
-

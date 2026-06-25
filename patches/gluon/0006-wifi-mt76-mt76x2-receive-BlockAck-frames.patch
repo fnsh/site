@@ -1,7 +1,7 @@
-From 4140f08a8ac4f9e50c78f295c8f826231390cfda Mon Sep 17 00:00:00 2001
+From Mon Sep 17 00:00:00 2001
 From: David Bauer <mail@david-bauer.net>
 Date: Wed, 17 Jun 2026 13:42:50 +0200
-Subject: [PATCH 6/6] wifi: mt76: mt76x2: receive BlockAck frames
+Subject: [PATCH] wifi: mt76: mt76x2: receive BlockAck frames
 
 Enable RX of BlockAck frames to the host.
 
@@ -72,6 +72,3 @@ index 00000000..51c0bb3d
 ++-- 
 ++2.53.0
 ++
--- 
-2.53.0
-

@@ -1,8 +1,8 @@
-From ac915ff0efa8d80c35bf4bb8338a5f6f924b263e Mon Sep 17 00:00:00 2001
+From Mon Sep 17 00:00:00 2001
 From: David Bauer <mail@david-bauer.net>
 Date: Tue, 16 Jun 2026 16:58:51 +0200
-Subject: [PATCH 5/6] wifi: mt76: mt76x2: enable SW tracking for BlockAckReq
- ACK status
+Subject: [PATCH] wifi: mt76: mt76x2: enable SW tracking for BlockAckReq ACK
+ status
 
 ---
  ...-tracking-for-BlockAckReq-ACK-status.patch | 36 +++++++++++++++++++
@@ -51,6 +51,3 @@ index 00000000..036dbdd5
 ++-- 
 ++2.53.0
 ++
--- 
-2.53.0
-

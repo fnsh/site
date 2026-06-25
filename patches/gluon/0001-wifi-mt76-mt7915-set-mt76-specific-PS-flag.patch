@@ -1,7 +1,7 @@
-From 1d635bb9ced84d06527814467108d1022b20d051 Mon Sep 17 00:00:00 2001
+From Mon Sep 17 00:00:00 2001
 From: David Bauer <mail@david-bauer.net>
 Date: Thu, 12 Mar 2026 00:56:34 +0100
-Subject: [PATCH 1/6] wifi: mt76: mt7915: set mt76 specific PS flag
+Subject: [PATCH] wifi: mt76: mt7915: set mt76 specific PS flag
 
 mt76 tracks the PSM state of a sta internally with a wcid flag. TX to
 such clients is skipped based on the presence of this flag.
@@ -89,6 +89,3 @@ index 00000000..d2676995
 ++-- 
 ++2.51.0
 ++
--- 
-2.53.0
-
