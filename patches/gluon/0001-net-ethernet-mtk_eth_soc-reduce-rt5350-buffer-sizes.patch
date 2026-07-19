@@ -1,0 +1,43 @@
+From 2df72d841a8b2a689b4b1381d0d459327a2a6db0 Mon Sep 17 00:00:00 2001
+From: David Bauer <mail@david-bauer.net>
+Date: Sun, 19 Jul 2026 17:16:35 +0200
+Subject: [PATCH] net: ethernet: mtk_eth_soc: reduce rt5350 buffer sizes
+
+The SoC (mt7628) only has a 100 Mbit/ ethernet interface.
+
+Signed-off-by: David Bauer <mail@david-bauer.net>
+---
+ ...k_eth_soc-reduce-rt5350-buffer-sizes.patch | 21 +++++++++++++++++++
+ 1 file changed, 21 insertions(+)
+ create mode 100644 patches/openwrt/0024-net-ethernet-mtk_eth_soc-reduce-rt5350-buffer-sizes.patch
+
+diff --git a/patches/openwrt/0024-net-ethernet-mtk_eth_soc-reduce-rt5350-buffer-sizes.patch b/patches/openwrt/0024-net-ethernet-mtk_eth_soc-reduce-rt5350-buffer-sizes.patch
+new file mode 100644
+index 00000000..7db22eb3
+--- /dev/null
++++ b/patches/openwrt/0024-net-ethernet-mtk_eth_soc-reduce-rt5350-buffer-sizes.patch
+@@ -0,0 +1,21 @@
++From: David Bauer <mail@david-bauer.net>
++Date: Sun, 19 Jul 2026 17:16:16 +0200
++Subject: net: ethernet: mtk_eth_soc: reduce rt5350 buffer sizes
++
++The SoC (mt7628) only has a 100 Mbit/ ethernet interface.
++
++Signed-off-by: David Bauer <mail@david-bauer.net>
++
++diff --git a/target/linux/generic/pending-6.6/738-01-net-ethernet-mtk_eth_soc-reduce-rx-ring-size-for-older.patch b/target/linux/generic/pending-6.6/738-01-net-ethernet-mtk_eth_soc-reduce-rx-ring-size-for-older.patch
++index 0b8c6ef2a789d14fec3523261314fb510119fcf3..ae26a43eb08b590c52cb49e232cf2b364c27e23c 100644
++--- a/target/linux/generic/pending-6.6/738-01-net-ethernet-mtk_eth_soc-reduce-rx-ring-size-for-older.patch
+++++ b/target/linux/generic/pending-6.6/738-01-net-ethernet-mtk_eth_soc-reduce-rx-ring-size-for-older.patch
++@@ -98,7 +98,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
++  		.dma_max_len = MTK_TX_DMA_BUF_LEN,
++  		.dma_len_offset = 16,
++ -		.dma_size = MTK_DMA_SIZE(2K),
++-+		.dma_size = MTK_DMA_SIZE(256),
++++		.dma_size = MTK_DMA_SIZE(64),
++  	},
++  };
++  
+-- 
+2.53.0
+
