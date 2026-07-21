@@ -1,0 +1,243 @@
+From 9a5d555a11a49af57f6111db72fc343377a6739c Mon Sep 17 00:00:00 2001
+From: David Bauer <mail@david-bauer.net>
+Date: Tue, 21 Jul 2026 17:35:40 +0200
+Subject: [PATCH] kernel: import l2tp patches
+
+---
+ .../0019-kernel-import-l2tp-patches.patch     | 224 ++++++++++++++++++
+ 1 file changed, 224 insertions(+)
+ create mode 100644 patches/openwrt/0019-kernel-import-l2tp-patches.patch
+
+diff --git a/patches/openwrt/0019-kernel-import-l2tp-patches.patch b/patches/openwrt/0019-kernel-import-l2tp-patches.patch
+new file mode 100644
+index 00000000..86acfc46
+--- /dev/null
++++ b/patches/openwrt/0019-kernel-import-l2tp-patches.patch
+@@ -0,0 +1,224 @@
++From: David Bauer <mail@david-bauer.net>
++Date: Tue, 21 Jul 2026 17:35:27 +0200
++Subject: kernel: import l2tp patches
++
++diff --git a/target/linux/generic/pending-6.6/990-l2tp-account-for-IP-version-in-SKB-headroom.patch b/target/linux/generic/pending-6.6/990-l2tp-account-for-IP-version-in-SKB-headroom.patch
++new file mode 100644
++index 0000000000000000000000000000000000000000..63485c752b16abc5f92d17858cbd7376c2b54d11
++--- /dev/null
+++++ b/target/linux/generic/pending-6.6/990-l2tp-account-for-IP-version-in-SKB-headroom.patch
++@@ -0,0 +1,87 @@
+++From 675085a86fd53953da67b3293a86a3a75eb95c77 Mon Sep 17 00:00:00 2001
+++From: David Bauer <mail@david-bauer.net>
+++Date: Thu, 26 Feb 2026 21:03:32 +0100
+++Subject: [PATCH 1/2] l2tp: account for IP version in SKB headroom
+++
+++Account for the IP version of the tunnel when accounting skb headroom on
+++xmit. This avoids having to potentially copy the skb a second time down
+++the stack due to allocating not enough space for IPv6 headers in case
+++the tunnel uses IPv6.
+++
+++Signed-off-by: David Bauer <mail@david-bauer.net>
+++---
+++ net/l2tp/l2tp_core.c | 3 ++-
+++ net/l2tp/l2tp_core.h | 1 +
+++ net/l2tp/l2tp_eth.c  | 9 ++-------
+++ 3 files changed, 5 insertions(+), 8 deletions(-)
+++
+++diff --git a/net/l2tp/l2tp_core.c b/net/l2tp/l2tp_core.c
+++index f940914959b18..3881aa22e529f 100644
+++--- a/net/l2tp/l2tp_core.c
++++++ b/net/l2tp/l2tp_core.c
+++@@ -1237,7 +1237,7 @@ static int l2tp_xmit_core(struct l2tp_session *session, struct sk_buff *skb, uns
+++ 	 * make room. Adjust truesize.
+++ 	 */
+++ 	uhlen = (tunnel->encap == L2TP_ENCAPTYPE_UDP) ? sizeof(*uh) : 0;
+++-	headroom = NET_SKB_PAD + sizeof(struct iphdr) + uhlen + session->hdr_len;
++++	headroom = NET_SKB_PAD + tunnel->l3_overhead + uhlen + session->hdr_len;
+++ 	if (skb_cow_head(skb, headroom)) {
+++ 		kfree_skb(skb);
+++ 		return NET_XMIT_DROP;
+++@@ -1688,6 +1688,7 @@ int l2tp_tunnel_register(struct l2tp_tunnel *tunnel, struct net *net,
+++ 	}
+++ 
+++ 	sk->sk_allocation = GFP_ATOMIC;
++++	tunnel->l3_overhead = kernel_sock_ip_overhead(sk);
+++ 	release_sock(sk);
+++ 
+++ 	sock_hold(sk);
+++diff --git a/net/l2tp/l2tp_core.h b/net/l2tp/l2tp_core.h
+++index ffd8ced3a51ff..aab574376d95f 100644
+++--- a/net/l2tp/l2tp_core.h
++++++ b/net/l2tp/l2tp_core.h
+++@@ -167,6 +167,7 @@ struct l2tp_tunnel {
+++ 	u32			tunnel_id;
+++ 	u32			peer_tunnel_id;
+++ 	int			version;	/* 2=>L2TPv2, 3=>L2TPv3 */
++++	int			l3_overhead;	/* IP header overhead */
+++ 
+++ 	char			name[L2TP_TUNNEL_NAME_MAX]; /* for logging */
+++ 	enum l2tp_encap_type	encap;
+++diff --git a/net/l2tp/l2tp_eth.c b/net/l2tp/l2tp_eth.c
+++index a4956ef9574cc..9e5f9deac08cf 100644
+++--- a/net/l2tp/l2tp_eth.c
++++++ b/net/l2tp/l2tp_eth.c
+++@@ -188,7 +188,6 @@ static void l2tp_eth_adjust_mtu(struct l2tp_tunnel *tunnel,
+++ 				struct net_device *dev)
+++ {
+++ 	unsigned int overhead = 0;
+++-	u32 l3_overhead = 0;
+++ 	u32 mtu;
+++ 
+++ 	/* if the encap is UDP, account for UDP header size */
+++@@ -197,11 +196,7 @@ static void l2tp_eth_adjust_mtu(struct l2tp_tunnel *tunnel,
+++ 		dev->needed_headroom += sizeof(struct udphdr);
+++ 	}
+++ 
+++-	lock_sock(tunnel->sock);
+++-	l3_overhead = kernel_sock_ip_overhead(tunnel->sock);
+++-	release_sock(tunnel->sock);
+++-
+++-	if (l3_overhead == 0) {
++++	if (tunnel->l3_overhead == 0) {
+++ 		/* L3 Overhead couldn't be identified, this could be
+++ 		 * because tunnel->sock was NULL or the socket's
+++ 		 * address family was not IPv4 or IPv6,
+++@@ -212,7 +207,7 @@ static void l2tp_eth_adjust_mtu(struct l2tp_tunnel *tunnel,
+++ 	/* Adjust MTU, factor overhead - underlay L3, overlay L2 hdr
+++ 	 * UDP overhead, if any, was already factored in above.
+++ 	 */
+++-	overhead += session->hdr_len + ETH_HLEN + l3_overhead;
++++	overhead += session->hdr_len + ETH_HLEN + tunnel->l3_overhead;
+++ 
+++ 	mtu = l2tp_tunnel_dst_mtu(tunnel) - overhead;
+++ 	if (mtu < dev->min_mtu || mtu > dev->max_mtu)
+++-- 
+++2.53.0
+++
++diff --git a/target/linux/generic/pending-6.6/991-l2tp-unify-headroom-calculation.patch b/target/linux/generic/pending-6.6/991-l2tp-unify-headroom-calculation.patch
++new file mode 100644
++index 0000000000000000000000000000000000000000..3a28de4bf23866085956a8505611104b25f4130d
++--- /dev/null
+++++ b/target/linux/generic/pending-6.6/991-l2tp-unify-headroom-calculation.patch
++@@ -0,0 +1,121 @@
+++From 776389921cf3ac810c1c4a63f24dcc2f1f62f0c7 Mon Sep 17 00:00:00 2001
+++From: David Bauer <mail@david-bauer.net>
+++Date: Thu, 26 Feb 2026 21:03:42 +0100
+++Subject: [PATCH 2/2] l2tp: unify headroom calculation
+++
+++Unify the calculation to determine the required headroom for each skb.
+++This was previously done inconsistently, resulting requesting more space
+++in the skb headroom when crafting the L2TP header than indicated with
+++needed_headroom.
+++
+++Signed-off-by: David Bauer <mail@david-bauer.net>
+++---
+++ net/l2tp/l2tp_core.c |  8 +++-----
+++ net/l2tp/l2tp_core.h | 17 +++++++++++++++++
+++ net/l2tp/l2tp_eth.c  | 14 +++-----------
+++ 3 files changed, 23 insertions(+), 16 deletions(-)
+++
+++diff --git a/net/l2tp/l2tp_core.c b/net/l2tp/l2tp_core.c
+++index 3881aa22e529f..c7530390ea994 100644
+++--- a/net/l2tp/l2tp_core.c
++++++ b/net/l2tp/l2tp_core.c
+++@@ -1227,18 +1227,16 @@ static int l2tp_xmit_core(struct l2tp_session *session, struct sk_buff *skb, uns
+++ 	struct l2tp_tunnel *tunnel = session->tunnel;
+++ 	unsigned int data_len = skb->len;
+++ 	struct sock *sk = tunnel->sock;
+++-	int headroom, uhlen, udp_len;
+++ 	int ret = NET_XMIT_SUCCESS;
+++ 	struct inet_sock *inet;
+++ 	struct udphdr *uh;
++++	int udp_len;
+++ 
+++ 	/* Check that there's enough headroom in the skb to insert IP,
+++ 	 * UDP and L2TP headers. If not enough, expand it to
+++ 	 * make room. Adjust truesize.
+++ 	 */
+++-	uhlen = (tunnel->encap == L2TP_ENCAPTYPE_UDP) ? sizeof(*uh) : 0;
+++-	headroom = NET_SKB_PAD + tunnel->l3_overhead + uhlen + session->hdr_len;
+++-	if (skb_cow_head(skb, headroom)) {
++++	if (skb_cow_head(skb, l2tp_session_skb_headroom(session, tunnel))) {
+++ 		kfree_skb(skb);
+++ 		return NET_XMIT_DROP;
+++ 	}
+++@@ -1290,7 +1288,7 @@ static int l2tp_xmit_core(struct l2tp_session *session, struct sk_buff *skb, uns
+++ 		uh = udp_hdr(skb);
+++ 		uh->source = inet->inet_sport;
+++ 		uh->dest = inet->inet_dport;
+++-		udp_len = uhlen + session->hdr_len + data_len;
++++		udp_len = l2tp_tunnel_udp_hdrlen(tunnel) + session->hdr_len + data_len;
+++ 		if (udp_len > U16_MAX) {
+++ 			kfree_skb(skb);
+++ 			ret = NET_XMIT_DROP;
+++diff --git a/net/l2tp/l2tp_core.h b/net/l2tp/l2tp_core.h
+++index aab574376d95f..93e7c264f1313 100644
+++--- a/net/l2tp/l2tp_core.h
++++++ b/net/l2tp/l2tp_core.h
+++@@ -335,6 +335,23 @@ static inline int l2tp_v3_ensure_opt_in_linear(struct l2tp_session *session, str
+++ 	return 0;
+++ }
+++ 
++++static inline int l2tp_tunnel_udp_hdrlen(struct l2tp_tunnel *tunnel)
++++{
++++	return tunnel->encap == L2TP_ENCAPTYPE_UDP ?
++++		sizeof(struct udphdr) : 0;
++++}
++++
++++static inline int l2tp_session_overhead(struct l2tp_session *session, struct l2tp_tunnel *tunnel)
++++{
++++	return l2tp_tunnel_udp_hdrlen(tunnel) + session->hdr_len +
++++		tunnel->l3_overhead;
++++}
++++
++++static inline int l2tp_session_skb_headroom(struct l2tp_session *session, struct l2tp_tunnel *tunnel)
++++{
++++	return NET_SKB_PAD + l2tp_session_overhead(session, tunnel);
++++}
++++
+++ #define MODULE_ALIAS_L2TP_PWTYPE(type) \
+++ 	MODULE_ALIAS("net-l2tp-type-" __stringify(type))
+++ 
+++diff --git a/net/l2tp/l2tp_eth.c b/net/l2tp/l2tp_eth.c
+++index 9e5f9deac08cf..6f4516180c922 100644
+++--- a/net/l2tp/l2tp_eth.c
++++++ b/net/l2tp/l2tp_eth.c
+++@@ -190,12 +190,6 @@ static void l2tp_eth_adjust_mtu(struct l2tp_tunnel *tunnel,
+++ 	unsigned int overhead = 0;
+++ 	u32 mtu;
+++ 
+++-	/* if the encap is UDP, account for UDP header size */
+++-	if (tunnel->encap == L2TP_ENCAPTYPE_UDP) {
+++-		overhead += sizeof(struct udphdr);
+++-		dev->needed_headroom += sizeof(struct udphdr);
+++-	}
+++-
+++ 	if (tunnel->l3_overhead == 0) {
+++ 		/* L3 Overhead couldn't be identified, this could be
+++ 		 * because tunnel->sock was NULL or the socket's
+++@@ -204,10 +198,8 @@ static void l2tp_eth_adjust_mtu(struct l2tp_tunnel *tunnel,
+++ 		 */
+++ 		return;
+++ 	}
+++-	/* Adjust MTU, factor overhead - underlay L3, overlay L2 hdr
+++-	 * UDP overhead, if any, was already factored in above.
+++-	 */
+++-	overhead += session->hdr_len + ETH_HLEN + tunnel->l3_overhead;
++++	/* Calculate required overhead */
++++	overhead = ETH_HLEN + l2tp_session_overhead(session, tunnel);
+++ 
+++ 	mtu = l2tp_tunnel_dst_mtu(tunnel) - overhead;
+++ 	if (mtu < dev->min_mtu || mtu > dev->max_mtu)
+++@@ -215,7 +207,7 @@ static void l2tp_eth_adjust_mtu(struct l2tp_tunnel *tunnel,
+++ 	else
+++ 		dev->mtu = mtu;
+++ 
+++-	dev->needed_headroom += session->hdr_len;
++++	dev->needed_headroom = l2tp_session_skb_headroom(session, tunnel);
+++ }
+++ 
+++ static int l2tp_eth_create(struct net *net, struct l2tp_tunnel *tunnel,
+++-- 
+++2.53.0
+++
+-- 
+2.53.0
+
