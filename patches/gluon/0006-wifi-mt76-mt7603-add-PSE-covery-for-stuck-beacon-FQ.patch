@@ -1,0 +1,154 @@
+From Mon Sep 17 00:00:00 2001
+From: David Bauer <mail@david-bauer.net>
+Date: Thu, 30 Jul 2026 22:36:39 +0200
+Subject: [PATCH] wifi: mt76: mt7603: add PSE covery for stuck beacon FQ
+
+---
+ ...3-add-PSE-covery-for-stuck-beacon-FQ.patch | 138 ++++++++++++++++++
+ 1 file changed, 138 insertions(+)
+ create mode 100644 patches/openwrt/0023-wifi-mt76-mt7603-add-PSE-covery-for-stuck-beacon-FQ.patch
+
+diff --git a/patches/openwrt/0023-wifi-mt76-mt7603-add-PSE-covery-for-stuck-beacon-FQ.patch b/patches/openwrt/0023-wifi-mt76-mt7603-add-PSE-covery-for-stuck-beacon-FQ.patch
+new file mode 100644
+index 00000000..06a337a4
+--- /dev/null
++++ b/patches/openwrt/0023-wifi-mt76-mt7603-add-PSE-covery-for-stuck-beacon-FQ.patch
+@@ -0,0 +1,138 @@
++From: David Bauer <mail@david-bauer.net>
++Date: Thu, 30 Jul 2026 22:36:15 +0200
++Subject: wifi: mt76: mt7603: add PSE covery for stuck beacon FQ
++
++diff --git a/package/kernel/mt76/patches/950-wifi-mt76-mt7603-add-PSE-covery-for-stuck-beacon-FQ.patch b/package/kernel/mt76/patches/950-wifi-mt76-mt7603-add-PSE-covery-for-stuck-beacon-FQ.patch
++new file mode 100644
++index 0000000000000000000000000000000000000000..8ea37a883bd4ddc9a568133dfd007fd20394571d
++--- /dev/null
+++++ b/package/kernel/mt76/patches/950-wifi-mt76-mt7603-add-PSE-covery-for-stuck-beacon-FQ.patch
++@@ -0,0 +1,128 @@
+++From 21965b29751a931b481800da3f76a0f3aa4d9168 Mon Sep 17 00:00:00 2001
+++From: David Bauer <mail@david-bauer.net>
+++Date: Thu, 30 Jul 2026 21:04:31 +0200
+++Subject: [PATCH] wifi: mt76: mt7603: add PSE covery for stuck beacon FQ
+++
+++Signed-off-by: David Bauer <mail@david-bauer.net>
+++---
+++ mt7603/beacon.c  | 16 ++++++++++++++--
+++ mt7603/debugfs.c |  1 +
+++ mt7603/mac.c     |  6 +++++-
+++ mt7603/mt7603.h  |  3 +++
+++ 4 files changed, 23 insertions(+), 3 deletions(-)
+++
+++--- a/mt7603/beacon.c
++++++ b/mt7603/beacon.c
+++@@ -33,6 +33,7 @@ mt7603_update_beacon_iter(void *priv, u8
+++ 	struct mt76_dev *mdev = &dev->mt76;
+++ 	struct mt7603_vif *mvif = (struct mt7603_vif *)vif->drv_priv;
+++ 	struct sk_buff *skb = NULL;
++++	bool fail = false;
+++ 	u32 om_idx = mvif->idx;
+++ 	u32 val;
+++ 
+++@@ -55,7 +56,7 @@ mt7603_update_beacon_iter(void *priv, u8
+++ 	mt76_wr(dev, MT_DMA_FQCR0, val |
+++ 		FIELD_PREP(MT_DMA_FQCR0_TARGET_QID, MT_TX_HW_QUEUE_BCN));
+++ 	if (!mt76_poll(dev, MT_DMA_FQCR0, MT_DMA_FQCR0_BUSY, 0, 5000)) {
+++-		dev->beacon_check = MT7603_WATCHDOG_TIMEOUT;
++++		fail = true;
+++ 		dev_kfree_skb(skb);
+++ 		goto out;
+++ 	}
+++@@ -63,7 +64,7 @@ mt7603_update_beacon_iter(void *priv, u8
+++ 	mt76_wr(dev, MT_DMA_FQCR0, val |
+++ 		FIELD_PREP(MT_DMA_FQCR0_TARGET_QID, MT_TX_HW_QUEUE_BMC));
+++ 	if (!mt76_poll(dev, MT_DMA_FQCR0, MT_DMA_FQCR0_BUSY, 0, 5000)) {
+++-		dev->beacon_check = MT7603_WATCHDOG_TIMEOUT;
++++		fail = true;
+++ 		dev_kfree_skb(skb);
+++ 		goto out;
+++ 	}
+++@@ -71,7 +72,21 @@ mt7603_update_beacon_iter(void *priv, u8
+++ 	mt76_tx_queue_skb(dev, dev->mphy.q_tx[MT_TXQ_BEACON],
+++ 			  MT_TXQ_BEACON, skb, &mvif->sta.wcid, NULL);
+++ 
+++-out:
++++	if (!mvif->beacon_queued)
++++		pr_warn("First time beacon queued\n");
++++	mvif->beacon_queued = true;
++++ out:
++++	if (dev->beacon_check >= MT7603_WATCHDOG_TIMEOUT ||
++++	    dev->beacon_fq_check >= MT7603_WATCHDOG_TIMEOUT) {
++++		// Reset pending
++++	} else if (fail && mvif->beacon_queued) {
++++		dev->beacon_check = MT7603_WATCHDOG_TIMEOUT;
++++		mvif->beacon_queued = false;
++++		pr_warn("First time beacon queueing failed, soft recovery\n");
++++	} else if (fail && !mvif->beacon_queued) {
++++		dev->beacon_fq_check = MT7603_WATCHDOG_TIMEOUT;
++++		pr_warn("Second time beacon queueing failed, hard recovery\n");
++++	}
+++ 	spin_unlock_bh(&dev->ps_lock);
+++ }
+++ 
+++--- a/mt7603/debugfs.c
++++++ b/mt7603/debugfs.c
+++@@ -12,6 +12,7 @@ mt7603_reset_read(struct seq_file *s, vo
+++ 		[RESET_CAUSE_RX_BUSY] = "RX DMA busy stuck",
+++ 		[RESET_CAUSE_RX_PSE_BUSY] = "RX PSE busy stuck",
+++ 		[RESET_CAUSE_BEACON_STUCK] = "Beacon stuck",
++++		[RESET_CAUSE_BEACON_FQ_STUCK] = "Beacon FQ stuck",
+++ 		[RESET_CAUSE_MCU_HANG] = "MCU hang",
+++ 		[RESET_CAUSE_RESET_FAILED] = "PSE reset failed",
+++ 	};
+++--- a/mt7603/mac.c
++++++ b/mt7603/mac.c
+++@@ -1455,6 +1455,7 @@ static void mt7603_mac_watchdog_reset(st
+++ 	}
+++ 
+++ 	if (dev->reset_cause[RESET_CAUSE_RESET_FAILED] ||
++++	    dev->cur_reset_cause == RESET_CAUSE_BEACON_FQ_STUCK ||
+++ 	    dev->cur_reset_cause == RESET_CAUSE_RX_PSE_BUSY)
+++ 		mt7603_pse_reset(dev);
+++ 
+++@@ -1844,6 +1845,9 @@ void mt7603_mac_work(struct work_struct
+++ 	if (mt7603_watchdog_check(dev, &dev->rx_pse_check,
+++ 				  RESET_CAUSE_RX_PSE_BUSY,
+++ 				  mt7603_rx_pse_busy) ||
++++	    mt7603_watchdog_check(dev, &dev->beacon_fq_check,
++++				  RESET_CAUSE_BEACON_FQ_STUCK,
++++				  NULL) ||
+++ 	    mt7603_watchdog_check(dev, &dev->beacon_check,
+++ 				  RESET_CAUSE_BEACON_STUCK,
+++ 				  NULL) ||
+++@@ -1861,6 +1865,7 @@ void mt7603_mac_work(struct work_struct
+++ 				  NULL) ||
+++ 	    dev->reset_cause[RESET_CAUSE_RESET_FAILED]) {
+++ 		dev->beacon_check = 0;
++++		dev->beacon_fq_check = 0;
+++ 		dev->tx_dma_check = 0;
+++ 		dev->tx_hang_check = 0;
+++ 		dev->rx_dma_check = 0;
+++--- a/mt7603/mt7603.h
++++++ b/mt7603/mt7603.h
+++@@ -85,6 +85,7 @@ struct mt7603_sta {
+++ struct mt7603_vif {
+++ 	struct mt7603_sta sta; /* must be first */
+++ 
++++	bool beacon_queued;
+++ 	u8 idx;
+++ };
+++ 
+++@@ -93,6 +94,7 @@ enum mt7603_reset_cause {
+++ 	RESET_CAUSE_TX_BUSY,
+++ 	RESET_CAUSE_RX_BUSY,
+++ 	RESET_CAUSE_BEACON_STUCK,
++++	RESET_CAUSE_BEACON_FQ_STUCK,
+++ 	RESET_CAUSE_RX_PSE_BUSY,
+++ 	RESET_CAUSE_MCU_HANG,
+++ 	RESET_CAUSE_RESET_FAILED,
+++@@ -141,6 +143,7 @@ struct mt7603_dev {
+++ 	u8 sensitivity_limit;
+++ 
+++ 	u8 beacon_check;
++++	u8 beacon_fq_check;
+++ 	u8 tx_hang_check;
+++ 	u8 tx_dma_check;
+++ 	u8 rx_dma_check;
