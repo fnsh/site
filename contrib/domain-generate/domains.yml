@@ -1,3 +1,4 @@
+---
 common:
   wifi:
     ssid: darmstadt.freifunk.net
@@ -15,46 +16,59 @@ common:
         backbone:
           peers:
             gw1:
+              # yamllint disable-line rule:line-length
               key: "48f5d45f094ba1d7088f044a14452f77569e6cb2e8f31c5ea41a90dbd6e41588"
-              remotes: ['"gw1.as62028.de"', '"[2a13:fcc0:ebbe:1:401:1000:110:3]"', '"194.180.249.3"']
+              remotes:
+                - '"gw1.as62028.de"'
+                - '"[2a13:fcc0:ebbe:1:401:1000:110:3]"'
+                - '"194.180.249.3"'
+            gw5:
+              # yamllint disable-line rule:line-length
+              key: "ba4f8a6ce8fd1338ffab23210a4548dd89e4b7b8f82fce40ae1d6ccd8da2c493"
+              remotes:
+                - '"gw5.as62028.de"'
+                - '"[2a13:fcc0:ebbe:1:401:1000:110:11]"'
+                - '"194.180.249.11"'
 
 domain:
   fnsh_dom1:
     dom_id: 1
+    # yamllint disable-line rule:line-length
     domain_seed: "ff7b8594823de4f1821aa770b36088afe51974a5e30435925c11aa6be77f228d"
     domain_codes:
-      fnsh_dom1: 
+      fnsh_dom1:
         name: "Domain 1"
         hidden: true
-      fnsh_default: 
+      fnsh_default:
         name: "Default"
         hidden: true
-      fnsh_da_110: 
+      fnsh_da_110:
         name: "Darmstadt: Stadtzentrum"
         hidden: false
-      fnsh_da_120: 
+      fnsh_da_120:
         name: "Darmstadt: Mollerstadt"
         hidden: false
-      fnsh_da_130: 
+      fnsh_da_130:
         name: "Darmstadt: Hochschulviertel"
         hidden: false
-      fnsh_da_210: 
+      fnsh_da_210:
         name: "Darmstadt: Johannesviertel"
         hidden: false
-      fnsh_da_220_230: 
+      fnsh_da_220_230:
         name: "Darmstadt: Martinsviertel"
         hidden: false
-      fnsh_da_270: 
+      fnsh_da_270:
         name: "Darmstadt: Bürgerparkviertel"
         hidden: false
-      fnsh_da_310: 
+      fnsh_da_310:
         name: "Darmstadt: Am Oberfeld"
         hidden: false
-      fnsh_da_320: 
+      fnsh_da_320:
         name: "Darmstadt: Mathildenhöhe"
         hidden: false
   fnsh_dom2:
     dom_id: 2
+    # yamllint disable-line rule:line-length
     domain_seed: "ff8ef8321e186f6b41517e3a4e738b34ad576f81005c3295d298deae8c51f57a"
     domain_codes:
       fnsh_dom2:
@@ -77,9 +91,10 @@ domain:
         hidden: false
   fnsh_dom3:
     dom_id: 3
+    # yamllint disable-line rule:line-length
     domain_seed: "ffb04bc8ebad10a52e99120de629af86e09aa1f118e44d50f58076c8591d2a2c"
     domain_codes:
-      fnsh_dom3: 
+      fnsh_dom3:
         name: "Domain 3"
         hidden: true
       fnsh_da_140:
@@ -102,6 +117,7 @@ domain:
         hidden: false
   fnsh_dom4:
     dom_id: 4
+    # yamllint disable-line rule:line-length
     domain_seed: "ff8cc377139e799b48ca1e2dfec260fec065cd551a0ed3019ae9fe0923f88cc6"
     domain_codes:
       fnsh_dom4:
@@ -121,6 +137,7 @@ domain:
         hidden: false
   fnsh_dom5:
     dom_id: 5
+    # yamllint disable-line rule:line-length
     domain_seed: "ff108d76a48ba3a975cb58ef5641b5b8b68a2d19ae0f6f9d87f90dd6f9bc006b"
     domain_codes:
       fnsh_dom5:
@@ -161,6 +178,7 @@ domain:
         hidden: false
   fnsh_dom7:
     dom_id: 7
+    # yamllint disable-line rule:line-length
     domain_seed: "ff5661cfd5f8cbec312769e89df4a96472970d10a338722d9b23916642d9a9ba"
     domain_codes:
       fnsh_dom7:
@@ -180,6 +198,7 @@ domain:
         hidden: false
   fnsh_dom8:
     dom_id: 8
+    # yamllint disable-line rule:line-length
     domain_seed: "ffb912f0fd4e756763279fe60e1e35e256cbd6458af7d0dc922325e2f880d614"
     domain_codes:
       fnsh_dom8:
@@ -190,6 +209,7 @@ domain:
         hidden: false
   fnsh_dom9:
     dom_id: 9
+    # yamllint disable-line rule:line-length
     domain_seed: "ff7669db498234c1899f10b4f2f2daa59a73c5485f94135381ca681681b5f822"
     domain_codes:
       fnsh_dom9:
@@ -203,6 +223,7 @@ domain:
         hidden: false
   fnsh_dom10:
     dom_id: 10
+    # yamllint disable-line rule:line-length
     domain_seed: "ffa18e2737f19727174aba14725435ccad736e90ec43c4af1a97c3b2126fd46f"
     domain_codes:
       fnsh_dom10:
@@ -222,6 +243,7 @@ domain:
         hidden: false
   fnsh_dom11:
     dom_id: 11
+    # yamllint disable-line rule:line-length
     domain_seed: "ff0aa339d46d27724f7b19778e54a0b3601564243cdece36241e2b004b5774ca"
     domain_codes:
       fnsh_dom11:
@@ -241,6 +263,7 @@ domain:
         hidden: false
   fnsh_dom12:
     dom_id: 12
+    # yamllint disable-line rule:line-length
     domain_seed: "ffb90f5b2606db5297cd803036924eb5d7939ba6971e866f8e9db980e99251b7"
     domain_codes:
       fnsh_dom12:
@@ -257,6 +280,7 @@ domain:
         hidden: false
   fnsh_dom13:
     dom_id: 13
+    # yamllint disable-line rule:line-length
     domain_seed: "ff72581ba2c9e46e78bd14d4b6f73ca9a48901df0dd1ebb377b1300263ff58e5"
     domain_codes:
       fnsh_dom13:
@@ -282,6 +306,7 @@ domain:
         hidden: false
   fnsh_dom14:
     dom_id: 14
+    # yamllint disable-line rule:line-length
     domain_seed: "ff8af48b0dda63d5036f506b8f90e68f5dbf93d45cc5341e0e8798c1b632e49f"
     domain_codes:
       fnsh_dom14:
@@ -301,6 +326,7 @@ domain:
         hidden: false
   fnsh_dom15:
     dom_id: 15
+    # yamllint disable-line rule:line-length
     domain_seed: "ff057730b6a54aae7b9db0260b95ac6aa76e9e6a23a770aab4e52d1ebfb30464"
     domain_codes:
       fnsh_dom15:
@@ -317,6 +343,7 @@ domain:
         hidden: false
   fnsh_dom16:
     dom_id: 16
+    # yamllint disable-line rule:line-length
     domain_seed: "ffa6edcf32809e88de6c45ca66f2e5a6b2ca8d8c839c3d37f7058193c3e944d3"
     domain_codes:
       fnsh_dom16:
@@ -339,6 +366,7 @@ domain:
         hidden: false
   fnsh_dom17:
     dom_id: 17
+    # yamllint disable-line rule:line-length
     domain_seed: "ff0922d1c3929c593b37853966bd754bea8f210282d08b79ed146cb07cb04609"
     domain_codes:
       fnsh_dom17:
@@ -379,6 +407,7 @@ domain:
         hidden: false
   fnsh_dom18:
     dom_id: 18
+    # yamllint disable-line rule:line-length
     domain_seed: "ffb5ca8666c0522db8855c645e44cb3efe71c94065d8bdb957e9516b7cef963d"
     domain_codes:
       fnsh_dom18:
@@ -389,6 +418,7 @@ domain:
         hidden: false
   fnsh_dom19:
     dom_id: 19
+    # yamllint disable-line rule:line-length
     domain_seed: "ff7328ee17f5995e1dea2f93f4612402abce6ee35694417b9d304082e09fcfa3"
     domain_codes:
       fnsh_dom19:
@@ -399,6 +429,7 @@ domain:
         hidden: false
   fnsh_dom20:
     dom_id: 20
+    # yamllint disable-line rule:line-length
     domain_seed: "ff7328ee17f599201dea2f93f4612402abce6ee35694417b9d304082e09fcfa3"
     domain_codes:
       fnsh_dom20:
