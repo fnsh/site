@@ -22,6 +22,13 @@ common:
                 - '"gw1.as62028.de"'
                 - '"[2a13:fcc0:ebbe:1:401:1000:110:3]"'
                 - '"194.180.249.3"'
+            gw2:
+              # yamllint disable-line rule:line-length
+              key: "ab1d8e1a05828ce6432a2ce302fbef6b666d2c0240ee7a8e9a164cab48b4d354"
+              remotes:
+                - '"gw2.as62028.de"'
+                - '"[2a13:fcc0:ebbe:1:401:1000:110:5]"'
+                - '"194.180.249.5"'
             gw5:
               # yamllint disable-line rule:line-length
               key: "ba4f8a6ce8fd1338ffab23210a4548dd89e4b7b8f82fce40ae1d6ccd8da2c493"
@@ -29,6 +36,20 @@ common:
                 - '"gw5.as62028.de"'
                 - '"[2a13:fcc0:ebbe:1:401:1000:110:11]"'
                 - '"194.180.249.11"'
+            gw7:
+              # yamllint disable-line rule:line-length
+              key: "50abc1c9a130cbaa7e4740ce4595d47918aed5da1bc8ac123a08c3e41c9ceea3"
+              remotes:
+                - '"gw7.as62028.de"'
+                - '"[2a13:fcc0:ebbe:1:401:1000:110:15]"'
+                - '"194.180.249.15"'
+            gw8:
+              # yamllint disable-line rule:line-length
+              key: "0d51cea799dc6362f0c8053c02b489900efa4b12f692f316e5b6aa5c8ac25945"
+              remotes:
+                - '"gw8.as62028.de"'
+                - '"[2a13:fcc0:ebbe:1:401:1000:110:17]"'
+                - '"194.180.249.17"'
 
 domain:
   fnsh_dom1:
