@@ -1,0 +1,34 @@
+---
+name: "Validate Domain Format"
+
+# yamllint disable-line rule:truthy
+on:
+  pull_request:
+  push:
+
+jobs:
+  validate-domains:
+    name: "Validate Domain Format"
+    runs-on: ubuntu-22.04
+    env:
+      DOMAINS_FILE: |
+        contrib/domain-generate/domains.yml
+      DOMAIN_TEMPDIR: /tmp/domains
+      DOMAIN_SITE_DIR: domains/
+    steps:
+      - uses: actions/checkout@v7
+      - name: Create Tempdir
+        run: mkdir -p /tmp/domains
+      - name: Render domains.yml to domain.conf
+        run: >
+          python3
+          contrib/domain-generate/generate_domain.py
+          -o $DOMAIN_TEMPDIR
+          $DOMAINS_FILE
+      - name: Compare domains with generated files
+        run: >
+          bash
+          .github/compare-domains.sh
+          $DOMAIN_SITE_DIR
+          $DOMAIN_TEMPDIR
+          "fnsh_"
