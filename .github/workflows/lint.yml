@@ -11,6 +11,7 @@ jobs:
     env:
       YAML_FILES: |
         .github/workflows/*.yml
+        contrib/domain-generate/domains.yml
     steps:
       - uses: actions/checkout@v7
       - name: Install Dependencies

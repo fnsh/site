@@ -1,0 +1,73 @@
+{
+	domain_names = {
+{% for code, obj in domain_codes.items() %}
+		{{ code }} = '{{ obj.name }}',
+{% endfor %}
+	},
+	domain_seed = '{{ domain_seed }}',
+	hide_domain = {{ hide_domain_repr }},
+{% if dns %}
+
+	dns = {
+		cacheentries = {{ dns.cacheentries }},
+		servers = { {% for s in dns.servers %}'{{ s }}', {% endfor %}},
+	},
+{% endif %}
+
+	prefix4 = '{{ prefix4 }}',
+	prefix6 = '{{ prefix6 }}',
+	extra_prefixes6 = {
+{% for p in extra_prefixes6 %}
+		'{{ p }}',
+{% endfor %}
+	},
+
+	next_node = {
+		name = { {% for n in next_node_name %}'{{ n }}', {% endfor %}},
+		ip4 = '{{ next_node_ip4 }}',
+		ip6 = '{{ next_node_ip6 }}',
+		mac = '{{ next_node_mac }}',
+	},
+
+	wifi24 = {
+		ap = {
+			ssid = "{{ wifi_ssid }}",
+			owe_ssid = "{{ wifi_owe_ssid }}",
+			owe_transition_mode = {{ owe_transition_mode }},
+		},
+		mesh = {
+			id = '{{ mesh_id }}',
+		},
+	},
+	wifi5 = {
+		ap = {
+			ssid = "{{ wifi_ssid }}",
+			owe_ssid = "{{ wifi_owe_ssid }}",
+			owe_transition_mode = {{ owe_transition_mode }},
+		},
+		mesh = {
+			id = '{{ mesh_id }}',
+		},
+	},
+
+	mesh_vpn = {
+		fastd = {
+			groups = {
+				backbone = {
+					peers = {
+{% for peer_name, peer in mesh_vpn_peers.items() %}
+						{{ peer_name }} = {
+							key = '{{ peer.key }}',
+							remotes = {
+{% for remote in peer.remotes %}
+								'{{ remote }} port {{ vpn_port }}',
+{% endfor %}
+							},
+						},
+{% endfor %}
+					},
+				},
+			},
+		},
+	},
+}
