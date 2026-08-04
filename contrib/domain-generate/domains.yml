@@ -157,6 +157,8 @@ domain:
         hidden: false
   fnsh_dom6:
     dom_id: 6
+    # yamllint disable-line rule:line-length
+    domain_seed: "ffd5e3a6aa691bd6bb8d21b673ed8b9de66ac4013cc52acd6b20ca9cd6f627f1"
     domain_codes:
       fnsh_dom6:
         name: "Domain 6"
