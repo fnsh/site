@@ -1,0 +1,413 @@
+common:
+  wifi:
+    ssid: darmstadt.freifunk.net
+    owe_ssid: owe.darmstadt.freifunk.net
+    owe_transition_mode: true
+  next_node:
+    name: [nextnode.ffda.io, nextnode]
+    mac: "da:ff:00:00:ff:ff"
+  ipv6_base: "fd01:67c:2ed8"
+  extra_ipv6_bases: ["2a0f:3786:100", "2a13:fcc0:2ed8"]
+  vpn_base_port: 10000
+  mesh_vpn:
+    fastd:
+      groups:
+        backbone:
+          peers:
+            gw1:
+              key: "48f5d45f094ba1d7088f044a14452f77569e6cb2e8f31c5ea41a90dbd6e41588"
+              remotes: ['"gw1.as62028.de"', '"[2a13:fcc0:ebbe:1:401:1000:110:3]"', '"194.180.249.3"']
+
+domain:
+  fnsh_dom1:
+    dom_id: 1
+    domain_seed: "ff7b8594823de4f1821aa770b36088afe51974a5e30435925c11aa6be77f228d"
+    domain_codes:
+      fnsh_dom1: 
+        name: "Domain 1"
+        hidden: true
+      fnsh_default: 
+        name: "Default"
+        hidden: true
+      fnsh_da_110: 
+        name: "Darmstadt: Stadtzentrum"
+        hidden: false
+      fnsh_da_120: 
+        name: "Darmstadt: Mollerstadt"
+        hidden: false
+      fnsh_da_130: 
+        name: "Darmstadt: Hochschulviertel"
+        hidden: false
+      fnsh_da_210: 
+        name: "Darmstadt: Johannesviertel"
+        hidden: false
+      fnsh_da_220_230: 
+        name: "Darmstadt: Martinsviertel"
+        hidden: false
+      fnsh_da_270: 
+        name: "Darmstadt: Bürgerparkviertel"
+        hidden: false
+      fnsh_da_310: 
+        name: "Darmstadt: Am Oberfeld"
+        hidden: false
+      fnsh_da_320: 
+        name: "Darmstadt: Mathildenhöhe"
+        hidden: false
+  fnsh_dom2:
+    dom_id: 2
+    domain_seed: "ff8ef8321e186f6b41517e3a4e738b34ad576f81005c3295d298deae8c51f57a"
+    domain_codes:
+      fnsh_dom2:
+        name: "Domain 2"
+        hidden: true
+      fnsh_da_240:
+        name: "Darmstadt: Waldkolonie"
+        hidden: false
+      fnsh_da_250:
+        name: "Darmstadt: Mornewegviertel"
+        hidden: false
+      fnsh_da_260:
+        name: "Darmstadt: Pallaswiesenviertel"
+        hidden: false
+      fnsh_da_530:
+        name: "Darmstadt: Verlegerviertel"
+        hidden: false
+      fnsh_da_540:
+        name: "Darmstadt: Am Kavalleriesand"
+        hidden: false
+  fnsh_dom3:
+    dom_id: 3
+    domain_seed: "ffb04bc8ebad10a52e99120de629af86e09aa1f118e44d50f58076c8591d2a2c"
+    domain_codes:
+      fnsh_dom3: 
+        name: "Domain 3"
+        hidden: true
+      fnsh_da_140:
+        name: "Darmstadt: Kapellplatzviertel"
+        hidden: false
+      fnsh_da_150:
+        name: "Darmstadt: St. Ludwig mit Eichbergviertel"
+        hidden: false
+      fnsh_da_330:
+        name: "Darmstadt: Woogsviertel"
+        hidden: false
+      fnsh_da_340:
+        name: "Darmstadt: An den Lichtwiesen"
+        hidden: false
+      fnsh_da_410:
+        name: "Darmstadt: Paulusviertel"
+        hidden: false
+      fnsh_da_420:
+        name: "Darmstadt: Alt-Bessungen"
+        hidden: false
+  fnsh_dom4:
+    dom_id: 4
+    domain_seed: "ff8cc377139e799b48ca1e2dfec260fec065cd551a0ed3019ae9fe0923f88cc6"
+    domain_codes:
+      fnsh_dom4:
+        name: "Domain 4"
+        hidden: true
+      fnsh_da_430:
+        name: "Darmstadt: An der Ludwigshöhe"
+        hidden: false
+      fnsh_da_440:
+        name: "Darmstadt: Lincoln-Siedlung"
+        hidden: false
+      fnsh_da_510:
+        name: "Darmstadt: Am Südbahnhof"
+        hidden: false
+      fnsh_da_520:
+        name: "Darmstadt: Heimstättensiedlung"
+        hidden: false
+  fnsh_dom5:
+    dom_id: 5
+    domain_seed: "ff108d76a48ba3a975cb58ef5641b5b8b68a2d19ae0f6f9d87f90dd6f9bc006b"
+    domain_codes:
+      fnsh_dom5:
+        name: "Domain 5"
+        hidden: true
+      fnsh_da_610_620_630:
+        name: "Darmstadt: Arheilgen"
+        hidden: false
+      fnsh_da_910_920:
+        name: "Darmstadt: Kranichstein"
+        hidden: false
+      fnsh_da_810_820:
+        name: "Darmstadt: Wixhausen"
+        hidden: false
+      fnsh_64390:
+        name: "Erzhausen"
+        hidden: false
+  fnsh_dom6:
+    dom_id: 6
+    domain_codes:
+      fnsh_dom6:
+        name: "Domain 6"
+        hidden: true
+      fnsh_64521:
+        name: "Groß-Gerau"
+        hidden: false
+      fnsh_64546:
+        name: "Mörfelden-Walldorf"
+        hidden: false
+      fnsh_64572:
+        name: "Büttelborn"
+        hidden: false
+      fnsh_64569:
+        name: "Nauheim"
+        hidden: false
+      fnsh_65468:
+        name: "Trebur"
+        hidden: false
+  fnsh_dom7:
+    dom_id: 7
+    domain_seed: "ff5661cfd5f8cbec312769e89df4a96472970d10a338722d9b23916642d9a9ba"
+    domain_codes:
+      fnsh_dom7:
+        name: "Domain 7"
+        hidden: true
+      fnsh_64579:
+        name: "Gernsheim"
+        hidden: false
+      fnsh_64560:
+        name: "Riedstadt"
+        hidden: false
+      fnsh_64589:
+        name: "Stockstadt am Rhein"
+        hidden: false
+      fnsh_64584:
+        name: "Biebesheim am Rhein"
+        hidden: false
+  fnsh_dom8:
+    dom_id: 8
+    domain_seed: "ffb912f0fd4e756763279fe60e1e35e256cbd6458af7d0dc922325e2f880d614"
+    domain_codes:
+      fnsh_dom8:
+        name: "Domain 8"
+        hidden: true
+      fnsh_64625:
+        name: "Babenhausen"
+        hidden: false
+  fnsh_dom9:
+    dom_id: 9
+    domain_seed: "ff7669db498234c1899f10b4f2f2daa59a73c5485f94135381ca681681b5f822"
+    domain_codes:
+      fnsh_dom9:
+        name: "Domain 9"
+        hidden: true
+      fnsh_64347:
+        name: "Griesheim"
+        hidden: false
+      fnsh_64331:
+        name: "Weiterstadt"
+        hidden: false
+  fnsh_dom10:
+    dom_id: 10
+    domain_seed: "ffa18e2737f19727174aba14725435ccad736e90ec43c4af1a97c3b2126fd46f"
+    domain_codes:
+      fnsh_dom10:
+        name: "Domain 10"
+        hidden: true
+      fnsh_64807:
+        name: "Dieburg"
+        hidden: false
+      fnsh_64409:
+        name: "Messel"
+        hidden: false
+      fnsh_64839:
+        name: "Münster (Hessen)"
+        hidden: false
+      fnsh_64859:
+        name: "Eppertshausen"
+        hidden: false
+  fnsh_dom11:
+    dom_id: 11
+    domain_seed: "ff0aa339d46d27724f7b19778e54a0b3601564243cdece36241e2b004b5774ca"
+    domain_codes:
+      fnsh_dom11:
+        name: "Domain 11"
+        hidden: true
+      fnsh_64846:
+        name: "Groß-Zimmern"
+        hidden: false
+      fnsh_64380:
+        name: "Roßdorf (bei Darmstadt)"
+        hidden: false
+      fnsh_64354:
+        name: "Reinheim"
+        hidden: false
+      fnsh_64401:
+        name: "Groß-Bieberau"
+        hidden: false
+  fnsh_dom12:
+    dom_id: 12
+    domain_seed: "ffb90f5b2606db5297cd803036924eb5d7939ba6971e866f8e9db980e99251b7"
+    domain_codes:
+      fnsh_dom12:
+        name: "Domain 12"
+        hidden: true
+      fnsh_64853:
+        name: "Otzberg"
+        hidden: false
+      fnsh_64823:
+        name: "Groß-Umstadt"
+        hidden: false
+      fnsh_64850:
+        name: "Schaafheim"
+        hidden: false
+  fnsh_dom13:
+    dom_id: 13
+    domain_seed: "ff72581ba2c9e46e78bd14d4b6f73ca9a48901df0dd1ebb377b1300263ff58e5"
+    domain_codes:
+      fnsh_dom13:
+        name: "Domain 13"
+        hidden: true
+      fnsh_64297:
+        name: "Darmstadt-Eberstadt"
+        hidden: false
+      fnsh_64342:
+        name: "Seeheim-Jugenheim"
+        hidden: false
+      fnsh_64665:
+        name: "Alsbach-Hähnlein"
+        hidden: false
+      fnsh_64319:
+        name: "Pfungstadt"
+        hidden: false
+      fnsh_64404:
+        name: "Bickenbach"
+        hidden: false
+      fnsh_64673:
+        name: "Zwingenberg"
+        hidden: false
+  fnsh_dom14:
+    dom_id: 14
+    domain_seed: "ff8af48b0dda63d5036f506b8f90e68f5dbf93d45cc5341e0e8798c1b632e49f"
+    domain_codes:
+      fnsh_dom14:
+        name: "Domain 14"
+        hidden: true
+      fnsh_64372:
+        name: "Ober-Ramstadt"
+        hidden: false
+      fnsh_64397:
+        name: "Modautal"
+        hidden: false
+      fnsh_64367:
+        name: "Mühltal"
+        hidden: false
+      fnsh_64405:
+        name: "Fischbachtal"
+        hidden: false
+  fnsh_dom15:
+    dom_id: 15
+    domain_seed: "ff057730b6a54aae7b9db0260b95ac6aa76e9e6a23a770aab4e52d1ebfb30464"
+    domain_codes:
+      fnsh_dom15:
+        name: "Domain 15"
+        hidden: true
+      fnsh_63303:
+        name: "Dreieich"
+        hidden: false
+      fnsh_63225:
+        name: "Langen"
+        hidden: false
+      fnsh_63329:
+        name: "Egelsbach"
+        hidden: false
+  fnsh_dom16:
+    dom_id: 16
+    domain_seed: "ffa6edcf32809e88de6c45ca66f2e5a6b2ca8d8c839c3d37f7058193c3e944d3"
+    domain_codes:
+      fnsh_dom16:
+        name: "Domain 16"
+        hidden: true
+      fnsh_63128:
+        name: "Dietzenbach"
+        hidden: false
+      fnsh_63110:
+        name: "Rodgau"
+        hidden: false
+      fnsh_63322:
+        name: "Rödermark"
+        hidden: false
+      fnsh_63500:
+        name: "Seligenstadt"
+        hidden: false
+      fnsh_63533:
+        name: "Mainhausen"
+        hidden: false
+  fnsh_dom17:
+    dom_id: 17
+    domain_seed: "ff0922d1c3929c593b37853966bd754bea8f210282d08b79ed146cb07cb04609"
+    domain_codes:
+      fnsh_dom17:
+        name: "Domain 17"
+        hidden: true
+      fnsh_64732:
+        name: "Bad König"
+        hidden: false
+      fnsh_64747:
+        name: "Breuberg"
+        hidden: false
+      fnsh_64711:
+        name: "Erbach"
+        hidden: false
+      fnsh_64720:
+        name: "Michelstadt"
+        hidden: false
+      fnsh_64395:
+        name: "Brensbach"
+        hidden: false
+      fnsh_64753:
+        name: "Brombachtal"
+        hidden: false
+      fnsh_64407:
+        name: "Fränkisch-Crumbach"
+        hidden: false
+      fnsh_64739:
+        name: "Höchst im Odenwald"
+        hidden: false
+      fnsh_64750:
+        name: "Lützelbach"
+        hidden: false
+      fnsh_64756:
+        name: "Mossautal"
+        hidden: false
+      fnsh_64385:
+        name: "Reichelsheim (Odenwald)"
+        hidden: false
+  fnsh_dom18:
+    dom_id: 18
+    domain_seed: "ffb5ca8666c0522db8855c645e44cb3efe71c94065d8bdb957e9516b7cef963d"
+    domain_codes:
+      fnsh_dom18:
+        name: "Domain 18"
+        hidden: true
+      fnsh_da_540_kelley:
+        name: "Darmstadt: Kelley-Barracks"
+        hidden: false
+  fnsh_dom19:
+    dom_id: 19
+    domain_seed: "ff7328ee17f5995e1dea2f93f4612402abce6ee35694417b9d304082e09fcfa3"
+    domain_codes:
+      fnsh_dom19:
+        name: "Domain 19"
+        hidden: true
+      fnsh_da_530_hh36:
+        name: "Darmstadt: Holzhofallee 36"
+        hidden: false
+  fnsh_dom20:
+    dom_id: 20
+    domain_seed: "ff7328ee17f599201dea2f93f4612402abce6ee35694417b9d304082e09fcfa3"
+    domain_codes:
+      fnsh_dom20:
+        name: "Domain 20"
+        hidden: true
+      fnsh_yolo:
+        name: "Test-Domain"
+        hidden: true
+    dns:
+      cacheentries: 4096
+      servers:
+        - "2a13:fcc0:ebbe:1:401:1000:110:19"
