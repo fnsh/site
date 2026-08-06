@@ -454,6 +454,7 @@ domain:
     dom_id: 20
     # yamllint disable-line rule:line-length
     domain_seed: "ff7328ee17f599201dea2f93f4612402abce6ee35694417b9d304082e09fcfa3"
+    ipv6_base: "2a13:fcc0:2ed8"
     domain_codes:
       fnsh_dom20:
         name: "Domain 20"
