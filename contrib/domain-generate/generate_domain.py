@@ -64,7 +64,7 @@ def build_context(spec, common, output_dir):
     hide_domain = [x for x, v in domain_codes.items() if v.get("hidden", False)]
     hide_domain_repr = "{ " + ", ".join(f"'{c}'" for c in hide_domain) + " }"
 
-    ipv6_base = common["ipv6_base"]
+    ipv6_base = spec.get("ipv6_base") or common["ipv6_base"]
     next_node = common.get("next_node", {})
     wifi = common.get("wifi", {})
     dns = spec.get("dns") or common.get("dns")
