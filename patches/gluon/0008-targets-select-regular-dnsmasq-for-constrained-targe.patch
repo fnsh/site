@@ -1,0 +1,55 @@
+From c4d32fbb8ff7a1287c7edaf0bbffad654d09cdef Mon Sep 17 00:00:00 2001
+From: David Bauer <mail@david-bauer.net>
+Date: Thu, 6 Aug 2026 01:52:12 +0200
+Subject: [PATCH 8/9] targets: select regular dnsmasq for constrained targets
+
+Select regular dnsmasq package without DNSSEC validation for targets
+which are typically resource constrained in terms of flash memory.
+
+Signed-off-by: David Bauer <mail@david-bauer.net>
+---
+ targets/ath79-generic | 2 ++
+ targets/ramips-mt7620 | 4 ++++
+ targets/ramips-mt76x8 | 4 ++++
+ 3 files changed, 10 insertions(+)
+
+diff --git a/targets/ath79-generic b/targets/ath79-generic
+index 42ad0d0d..d53a7f91 100644
+--- a/targets/ath79-generic
++++ b/targets/ath79-generic
+@@ -45,6 +45,8 @@ local ATH10K_PACKAGES_SMALLBUFFERS_QCA9887 = {
+ 
+ local ATH10K_PACKAGES_QCA9888 = {}
+ 
++config('GLUON_DNSMASQ_VARIANT_DEFAULT', false)
++config('GLUON_DNSMASQ_VARIANT_TINY', true)
+ 
+ -- ALFA Network
+ 
+diff --git a/targets/ramips-mt7620 b/targets/ramips-mt7620
+index 36940042..ae4a0b95 100644
+--- a/targets/ramips-mt7620
++++ b/targets/ramips-mt7620
+@@ -1,3 +1,7 @@
++config('GLUON_DNSMASQ_VARIANT_DEFAULT', false)
++config('GLUON_DNSMASQ_VARIANT_TINY', true)
++
++
+ -- ASUS
+ 
+ device('asus-rt-ac51u', 'asus_rt-ac51u', {
+diff --git a/targets/ramips-mt76x8 b/targets/ramips-mt76x8
+index e5f24dfd..10ab104c 100644
+--- a/targets/ramips-mt76x8
++++ b/targets/ramips-mt76x8
+@@ -1,3 +1,7 @@
++config('GLUON_DNSMASQ_VARIANT_DEFAULT', false)
++config('GLUON_DNSMASQ_VARIANT_TINY', true)
++
++
+ -- Cudy
+ 
+ device('cudy-tr1200-v1', 'cudy_tr1200-v1', {
+-- 
+2.53.0
+

@@ -1,0 +1,64 @@
+From 42251405a97981773e45b1ccd53cc49d98b681e1 Mon Sep 17 00:00:00 2001
+From: David Bauer <mail@david-bauer.net>
+Date: Sat, 8 Aug 2026 07:51:07 +0200
+Subject: [PATCH] gluon-core: adapt sysctl for 64M RAM
+
+Upstream lower fragmentation buffer limits and min_free_kbytes for
+devices with 32M of RAM to 384k low / 512k high. Apply the same limits
+to 64M boards in Gluon.
+
+This should not make a big difference, as fragmentation should only
+affect L3 traffic directed to the node, which is limited to SSH /
+status-page in normal operation.
+
+Also lower vm.min_free_kbytes to 2048k. From my testing, this reduces
+system load in operation massively, as the device less-aggressively
+reclaims fragmented pages. It also significantly improves stability and
+throughput on a Netgear R6120.
+
+OpenWrt sets this value to 8192k. The default value by the kernel
+calculation is 1024k.
+
+Signed-off-by: David Bauer <mail@david-bauer.net>
+---
+ .../files/lib/gluon/sysctl/memory-64m.sysctl        |  7 +++++++
+ .../gluon-core/luasrc/lib/gluon/upgrade/550-sysctl  | 13 +++++++++++++
+ 2 files changed, 20 insertions(+)
+ create mode 100644 package/gluon-core/files/lib/gluon/sysctl/memory-64m.sysctl
+ create mode 100755 package/gluon-core/luasrc/lib/gluon/upgrade/550-sysctl
+
+diff --git a/package/gluon-core/files/lib/gluon/sysctl/memory-64m.sysctl b/package/gluon-core/files/lib/gluon/sysctl/memory-64m.sysctl
+new file mode 100644
+index 00000000..e8c9877c
+--- /dev/null
++++ b/package/gluon-core/files/lib/gluon/sysctl/memory-64m.sysctl
+@@ -0,0 +1,7 @@
++vm.min_free_kbytes="2048"
++net.ipv4.ipfrag_low_thresh="393216"
++net.ipv4.ipfrag_high_thresh="524288"
++net.ipv6.ip6frag_low_thresh="393216"
++net.ipv6.ip6frag_high_thresh="524288"
++net.netfilter.nf_conntrack_frag6_low_thresh="393216"
++net.netfilter.nf_conntrack_frag6_high_thresh="524288"
+diff --git a/package/gluon-core/luasrc/lib/gluon/upgrade/550-sysctl b/package/gluon-core/luasrc/lib/gluon/upgrade/550-sysctl
+new file mode 100755
+index 00000000..5036eb41
+--- /dev/null
++++ b/package/gluon-core/luasrc/lib/gluon/upgrade/550-sysctl
+@@ -0,0 +1,13 @@
++#!/usr/bin/lua
++
++local util = require "gluon.util"
++local unistd = require "posix.unistd"
++
++if util.get_mem_total() >= 64 * 1024 * 1024 then
++	return
++end
++
++unistd.link(
++	"/lib/gluon/sysctl/memory-64m.sysctl",
++	"/etc/sysctl.d/35-gluon-memory-64m.sysctl",
++	true)
+-- 
+2.53.0
+
