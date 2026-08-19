@@ -1,8 +1,12 @@
-GLUON_SITE_FEEDS='community fssrl'
+GLUON_SITE_FEEDS='community fnsh fssrl'
 
 PACKAGES_COMMUNITY_REPO=https://github.com/freifunk-gluon/community-packages.git
 PACKAGES_COMMUNITY_BRANCH=master
 PACKAGES_COMMUNITY_COMMIT=d839133ea16174cc5cfeff3e7cae062979dae3be
+
+PACKAGES_FNSH_REPO=https://github.com/fnsh/fnsh-packages.git
+PACKAGES_FNSH_BRANCH=master
+PACKAGES_FNSH_COMMIT=47eec55cc2c12baf3cca6e9a8e17cd130cf8ad24
 
 PACKAGES_FSSRL_REPO=https://github.com/fnsh/fastd-server-side-ratelimit.git
 PACKAGES_FSSRL_BRANCH=master

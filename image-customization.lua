@@ -23,6 +23,7 @@ packages({
 	'respondd-module-airtime',
 	'ffda-ssh-manager',
 	'ffda-node-whisperer',
+	'fnsh-node-migrator',
 })
 
 -- Packages and features for devices which are not flagged as tiny
