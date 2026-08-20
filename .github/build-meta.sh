@@ -82,7 +82,7 @@ DEFAULT_RELEASE_VERSION="$DEFAULT_RELEASE_VERSION-$GIT_SHORT_HASH"
 
 # Create site-version from site.mk
 SITE_VERSION="$(make --no-print-directory -C "$SCRIPT_DIR/.." -f ci-build.mk site-version)"
-SITE_VERSION="$SITE_VERSION-ffda-$GIT_COMMIT_DATE-$GIT_SHORT_HASH"
+SITE_VERSION="$SITE_VERSION-fnsh-$GIT_COMMIT_DATE-$GIT_SHORT_HASH"
 
 # Enable Manifest generation conditionally
 MANIFEST_STABLE="0"
