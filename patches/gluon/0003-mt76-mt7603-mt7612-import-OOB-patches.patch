@@ -1,0 +1,109 @@
+From Mon Sep 17 00:00:00 2001
+From: David Bauer <mail@david-bauer.net>
+Date: Fri, 28 Aug 2026 18:24:40 +0200
+Subject: [PATCH] mt76: mt7603/mt7612: import OOB patches
+
+---
+ ...t76-mt7603-mt7612-import-OOB-patches.patch | 93 +++++++++++++++++++
+ 1 file changed, 93 insertions(+)
+ create mode 100644 patches/openwrt/0021-mt76-mt7603-mt7612-import-OOB-patches.patch
+
+diff --git a/patches/openwrt/0021-mt76-mt7603-mt7612-import-OOB-patches.patch b/patches/openwrt/0021-mt76-mt7603-mt7612-import-OOB-patches.patch
+new file mode 100644
+index 00000000..51c53047
+--- /dev/null
++++ b/patches/openwrt/0021-mt76-mt7603-mt7612-import-OOB-patches.patch
+@@ -0,0 +1,93 @@
++From: David Bauer <mail@david-bauer.net>
++Date: Fri, 28 Aug 2026 18:22:25 +0200
++Subject: mt76: mt7603/mt7612: import OOB patches
++
++diff --git a/package/kernel/mt76/patches/750-wifi-mt76-mt76x02-guard-QoS-control-field-read.patch b/package/kernel/mt76/patches/750-wifi-mt76-mt76x02-guard-QoS-control-field-read.patch
++new file mode 100644
++index 0000000000000000000000000000000000000000..ed4119bff71ef9dbe2500a04c381c798c2424c18
++--- /dev/null
+++++ b/package/kernel/mt76/patches/750-wifi-mt76-mt76x02-guard-QoS-control-field-read.patch
++@@ -0,0 +1,38 @@
+++From 3ab934ddc667bb7ede3171e60119533842e871b0 Mon Sep 17 00:00:00 2001
+++From: David Bauer <mail@david-bauer.net>
+++Date: Fri, 28 Aug 2026 16:53:55 +0200
+++Subject: [PATCH 1/2] wifi: mt76: mt76x02: guard QoS control field read
+++
+++Guard the read of the QoS control value from the header to QoS data
+++frames.
+++
+++This is consistent with the handling present in mt7603_mac_fill_rx
+++for MT7603 radios.
+++
+++Signed-off-by: David Bauer <mail@david-bauer.net>
+++---
+++ mt76x02_mac.c | 6 ++++--
+++ 1 file changed, 4 insertions(+), 2 deletions(-)
+++
+++diff --git a/mt76x02_mac.c b/mt76x02_mac.c
+++index 21f8b1e6..5fa26e33 100644
+++--- a/mt76x02_mac.c
++++++ b/mt76x02_mac.c
+++@@ -869,10 +869,12 @@ int mt76x02_mac_process_rx(struct mt76x02_dev *dev, struct sk_buff *skb,
+++ 	status->freq = dev->mphy.chandef.chan->center_freq;
+++ 	status->band = dev->mphy.chandef.chan->band;
+++ 
+++-	hdr = (struct ieee80211_hdr *)skb->data;
+++-	status->qos_ctl = *ieee80211_get_qos_ctl(hdr);
+++ 	status->seqno = FIELD_GET(MT_RXWI_SN, tid_sn);
+++ 
++++	hdr = (struct ieee80211_hdr *)skb->data;
++++	if (ieee80211_is_data_qos(hdr->frame_control))
++++		status->qos_ctl = *ieee80211_get_qos_ctl(hdr);
++++
+++ 	return mt76x02_mac_process_rate(dev, status, rate);
+++ }
+++ 
+++-- 
+++2.53.0
+++
++diff --git a/package/kernel/mt76/patches/751-wifi-mt76-mt7603-check-skb_pull-return-value-in-mt76.patch b/package/kernel/mt76/patches/751-wifi-mt76-mt7603-check-skb_pull-return-value-in-mt76.patch
++new file mode 100644
++index 0000000000000000000000000000000000000000..2e39d5573fd0a49dd86c7e5d99d7bf51b15276e8
++--- /dev/null
+++++ b/package/kernel/mt76/patches/751-wifi-mt76-mt7603-check-skb_pull-return-value-in-mt76.patch
++@@ -0,0 +1,39 @@
+++From df0bedb2b876628b5270e6bc4837ffd24d7f2329 Mon Sep 17 00:00:00 2001
+++From: David Bauer <mail@david-bauer.net>
+++Date: Fri, 28 Aug 2026 17:29:06 +0200
+++Subject: [PATCH 2/2] wifi: mt76: mt7603: check skb_pull() return value in
+++ mt7603_mac_fill_rx
+++
+++The final skb_pull in mt7603_mac_fill_rx advances past the RXD
+++groups plus padding, but the preceding per-group bounds checks
+++don't account for the padding bytes.
+++
+++If the frame also requires a reinserted CCMP header,
+++mt76_insert_ccmp_hdr then does an unchecked __skb_push,
+++potentially corrupting memory outside the page-pool buffer.
+++
+++Check the return value of skb_pull to avoid this from
+++happening.
+++
+++Signed-off-by: David Bauer <mail@david-bauer.net>
+++---
+++ mt7603/mac.c | 3 ++-
+++ 1 file changed, 2 insertions(+), 1 deletion(-)
+++
+++diff --git a/mt7603/mac.c b/mt7603/mac.c
+++index fa0bf9a2..d9f910bc 100644
+++--- a/mt7603/mac.c
++++++ b/mt7603/mac.c
+++@@ -690,7 +690,8 @@ mt7603_mac_fill_rx(struct mt7603_dev *dev, struct sk_buff *skb)
+++ 		return -EINVAL;
+++ 	}
+++ 
+++-	skb_pull(skb, (u8 *)rxd - skb->data + 2 * remove_pad);
++++	if (!skb_pull(skb, (u8 *)rxd - skb->data + 2 * remove_pad))
++++		return -EINVAL;
+++ 
+++ 	if (insert_ccmp_hdr) {
+++ 		u8 key_id = FIELD_GET(MT_RXD1_NORMAL_KEY_ID, rxd1);
+++-- 
+++2.53.0
+++
