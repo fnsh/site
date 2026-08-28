@@ -18,13 +18,13 @@ Signed-off-by: David Bauer <mail@david-bauer.net>
 ---
  ...t76-mt7915-set-mt76-specific-PS-flag.patch | 63 +++++++++++++++++++
  1 file changed, 63 insertions(+)
- create mode 100644 patches/openwrt/0020-wifi-mt76-mt7915-set-mt76-specific-PS-flag.patch
+ create mode 100644 patches/openwrt/0019-wifi-mt76-mt7915-set-mt76-specific-PS-flag.patch
 
-diff --git a/patches/openwrt/0020-wifi-mt76-mt7915-set-mt76-specific-PS-flag.patch b/patches/openwrt/0020-wifi-mt76-mt7915-set-mt76-specific-PS-flag.patch
+diff --git a/patches/openwrt/0019-wifi-mt76-mt7915-set-mt76-specific-PS-flag.patch b/patches/openwrt/0019-wifi-mt76-mt7915-set-mt76-specific-PS-flag.patch
 new file mode 100644
 index 00000000..d2676995
 --- /dev/null
-+++ b/patches/openwrt/0020-wifi-mt76-mt7915-set-mt76-specific-PS-flag.patch
++++ b/patches/openwrt/0019-wifi-mt76-mt7915-set-mt76-specific-PS-flag.patch
 @@ -0,0 +1,63 @@
 +From: David Bauer <mail@david-bauer.net>
 +Date: Thu, 12 Mar 2026 00:54:29 +0100
