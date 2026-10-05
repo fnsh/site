@@ -8,7 +8,7 @@ common:
     name: [nextnode.as62028.de, nextnode]
     mac: "da:ff:00:00:ff:ff"
   ipv6_base: "fd01:67c:2ed8"
-  extra_ipv6_bases: ["2a0f:3786:100", "2a13:fcc0:2ed8"]
+  extra_ipv6_bases: ["2a13:fcc0:2ed8"]
   vpn_base_port: 10000
   mesh_vpn:
     fastd:
@@ -29,13 +29,6 @@ common:
                 - '"gw2.as62028.de"'
                 - '"[2a13:fcc0:ebbe:1:401:1000:110:5]"'
                 - '"194.180.249.5"'
-            gw5:
-              # yamllint disable-line rule:line-length
-              key: "ba4f8a6ce8fd1338ffab23210a4548dd89e4b7b8f82fce40ae1d6ccd8da2c493"
-              remotes:
-                - '"gw5.as62028.de"'
-                - '"[2a13:fcc0:ebbe:1:401:1000:110:11]"'
-                - '"194.180.249.11"'
             gw7:
               # yamllint disable-line rule:line-length
               key: "50abc1c9a130cbaa7e4740ce4595d47918aed5da1bc8ac123a08c3e41c9ceea3"
@@ -50,7 +43,6 @@ common:
                 - '"gw8.as62028.de"'
                 - '"[2a13:fcc0:ebbe:1:401:1000:110:17]"'
                 - '"194.180.249.17"'
-
 domain:
   fnsh_dom1:
     dom_id: 1
