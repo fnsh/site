@@ -61,7 +61,6 @@ local pkgs_usb_storage = {
 	'block-mount',
 	'blkid',
 	'kmod-fs-ext4',
-	'kmod-fs-ntfs',
 	'kmod-fs-vfat',
 	'kmod-usb-storage',
 	'kmod-usb-storage-extras',  -- Card Readers
