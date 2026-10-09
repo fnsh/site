@@ -1,4 +1,4 @@
-GLUON_SITE_FEEDS='community fssrl'
+GLUON_SITE_FEEDS='community fssrl ucode'
 
 PACKAGES_COMMUNITY_REPO=https://github.com/freifunk-gluon/community-packages.git
 PACKAGES_COMMUNITY_BRANCH=master
@@ -8,3 +8,6 @@ PACKAGES_FSSRL_REPO=https://github.com/fnsh/fastd-server-side-ratelimit.git
 PACKAGES_FSSRL_BRANCH=master
 PACKAGES_FSSRL_COMMIT=d1ad49f8caa98145b0a75950ffa52e2c99cc38a4
 
+PACKAGES_UCODE_REPO=https://github.com/fnsh/ucode-packages.git
+PACKAGES_UCODE_BRANCH=master
+PACKAGES_UCODE_COMMIT=91f889f5ec0560f80a4f15fd9686505b5ac7c7cf
