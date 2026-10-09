@@ -33,7 +33,8 @@ if not device_class('tiny') then
 --	})
 
 	packages({
-		'fssrl-client-gluon'
+		'fssrl-client-gluon',
+		'fnsh-gluon-statistics',
 	})
 
 	features({
