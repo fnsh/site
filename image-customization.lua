@@ -22,6 +22,7 @@ packages({
 	'iwinfo',
 	'respondd-module-airtime',
 	'ffda-ssh-manager',
+	'fnsh-beacon-report-collector',
 	-- ToDo: Re-Enable once compile failure is fixed
 	--	'ffda-node-whisperer',
 })
