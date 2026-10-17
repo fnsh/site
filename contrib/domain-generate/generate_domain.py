@@ -87,7 +87,7 @@ def build_context(spec, common, output_dir):
         "domain_seed": domain_seed,
         "hide_domain_repr": hide_domain_repr,
         "dns": dns,
-        "prefix4": f"10.{dom_id * 10}.0.0/20",
+        "prefix4": f"10.{dom_id * 10}.0.0/16",
         "prefix6": f"{ipv6_base}:10{hexid}::/64",
         "extra_prefixes6": [
             f"{base}:10{hexid}::/64" for base in common.get("extra_ipv6_bases", [])
