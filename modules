@@ -6,7 +6,7 @@ PACKAGES_COMMUNITY_COMMIT=d839133ea16174cc5cfeff3e7cae062979dae3be
 
 PACKAGES_FNSH_REPO=https://github.com/fnsh/fnsh-packages.git
 PACKAGES_FNSH_BRANCH=master
-PACKAGES_FNSH_COMMIT=cea787fa3058b34308e096bcc9e8d1a5b8e96f0e
+PACKAGES_FNSH_COMMIT=25507cb12217b80d91ba9014489261eece13abfb
 
 PACKAGES_FSSRL_REPO=https://github.com/fnsh/fastd-server-side-ratelimit.git
 PACKAGES_FSSRL_BRANCH=master
