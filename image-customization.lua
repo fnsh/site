@@ -23,6 +23,7 @@ packages({
 	'respondd-module-airtime',
 	'ffda-ssh-manager',
 	'fnsh-wan-limit',
+	'fnsh-gluon-statistics', 
 	-- ToDo: Re-Enable once compile failure is fixed
 	--	'ffda-node-whisperer',
 })
