@@ -1,7 +1,7 @@
 FNSH_SITE_DIR:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 FNSH_SITE_VERSION_GIT := $(shell git -C $(FNSH_SITE_DIR) describe --tags --abbrev=0 | sed 's/-.*//')
 
-FNSH_SITE_VERSION_FALLBACK := 4.1
+FNSH_SITE_VERSION_FALLBACK := 4.3
 FNSH_SITE_VERSION := $(if $(FNSH_SITE_VERSION_GIT),$(FNSH_SITE_VERSION_GIT),$(FNSH_SITE_VERSION_FALLBACK))
 
 DEFAULT_GLUON_RELEASE := $(FNSH_SITE_VERSION)~$(shell date '+%Y%m%d')
