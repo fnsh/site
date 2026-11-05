@@ -1,4 +1,3 @@
----
 common:
   wifi:
     ssid: darmstadt.freifunk.net
@@ -29,6 +28,34 @@ common:
                 - '"gw2.as62028.de"'
                 - '"[2a13:fcc0:ebbe:1:401:1000:110:5]"'
                 - '"194.180.249.5"'
+            gw3:
+              # yamllint disable-line rule:line-length
+              key: "57ec3a7ee5dbd99ed2c8a7786c3bf9b6208796c60cc2d141b0fc7db7155a9b55"
+              remotes:
+                - '"gw3.as62028.de"'
+                - '"[2a13:fcc0:ebbe:1:401:1000:110:7]"'
+                - '"194.180.249.7"'
+            gw4:
+              # yamllint disable-line rule:line-length
+              key: "e96a9572b8ab4bbcb955ce51af118dfa912de3d1da2ce55838ebe3be59c61dd3"
+              remotes:
+                - '"gw4.as62028.de"'
+                - '"[2a13:fcc0:ebbe:1:401:1000:110:9]"'
+                - '"194.180.249.9"'
+            gw5:
+              # yamllint disable-line rule:line-length
+              key: "ba4f8a6ce8fd1338ffab23210a4548dd89e4b7b8f82fce40ae1d6ccd8da2c493"
+              remotes:
+                - '"gw5.as62028.de"'
+                - '"[2a13:fcc0:ebbe:1:401:1000:110:11]"'
+                - '"194.180.249.11"'
+            gw6:
+              # yamllint disable-line rule:line-length
+              key: "9508e90bb49cebc0196a62e30393d0ef17a791243cd910210b35c52c4d8476bc"
+              remotes:
+                - '"gw6.as62028.de"'
+                - '"[2a13:fcc0:ebbe:1:401:1000:110:13]"'
+                - '"194.180.249.13"'
             gw7:
               # yamllint disable-line rule:line-length
               key: "50abc1c9a130cbaa7e4740ce4595d47918aed5da1bc8ac123a08c3e41c9ceea3"
