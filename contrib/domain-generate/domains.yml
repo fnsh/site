@@ -4,7 +4,7 @@ common:
     owe_ssid: owe.darmstadt.freifunk.net
     owe_transition_mode: true
   next_node:
-    name: [nextnode.as62028.de, nextnode]
+    name: [nextnode.mesh.as62028.de, nextnode]
     mac: "da:ff:00:00:ff:ff"
   ipv6_base: "fd01:67c:2ed8"
   extra_ipv6_bases: ["2a13:fcc0:2ed8"]
