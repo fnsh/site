@@ -1,8 +1,8 @@
 GLUON_SITE_FEEDS='community fnsh fssrl'
 
 PACKAGES_COMMUNITY_REPO=https://github.com/freifunk-gluon/community-packages.git
-PACKAGES_COMMUNITY_BRANCH=master
-PACKAGES_COMMUNITY_COMMIT=d839133ea16174cc5cfeff3e7cae062979dae3be
+PACKAGES_COMMUNITY_BRANCH=main
+PACKAGES_COMMUNITY_COMMIT=5672797dcf5bcc3ee1061e97600f3bc855454a1f
 
 PACKAGES_FNSH_REPO=https://github.com/fnsh/fnsh-packages.git
 PACKAGES_FNSH_BRANCH=master
