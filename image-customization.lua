@@ -23,8 +23,7 @@ packages({
 	'respondd-module-airtime',
 	'ffda-ssh-manager',
 	'fnsh-wan-limit',
-	-- ToDo: Re-Enable once compile failure is fixed
-	--	'ffda-node-whisperer',
+	'ffda-node-whisperer',
 })
 
 -- Packages and features for devices which are not flagged as tiny
