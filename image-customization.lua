@@ -36,6 +36,7 @@ if not device_class('tiny') then
 	packages({
 		'fnsh-beacon-report-collector',
 		'fnsh-beacon-report-submission',
+		'fnsh-gluon-statistics',
 		'fssrl-client-gluon'
 	})
 
